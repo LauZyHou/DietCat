@@ -1,3 +1,6 @@
+# i think these would be ignore
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

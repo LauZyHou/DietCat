@@ -1,0 +1,114 @@
+/*四大功能盒子*/
+.big4div {
+    width: 1241px;
+    margin: 15px auto 0;
+    text-align: center;
+    /*padding-left: 20px;*/
+}
+
+/*四大功能里的小灰盒子高度顶满*/
+.tile {
+    height: 100%;
+}
+
+/*各种推荐的最外层*/
+.outer {
+    width: 1241px;
+    margin: 20px auto 0;
+}
+
+/*左上角标题文字外盒子*/
+.lftop-contain {
+    border-bottom: 1px solid gray;
+}
+
+/*左上角标题文字内盒子*/
+.lftop-txt {
+    width: 75px;
+    /*小蓝色短线*/
+    border-bottom: 2px solid #299be4;
+}
+
+/*楼阁容器*/
+.building {
+    background-color: #79bbe7;
+}
+
+/*每个窗格*/
+.building > .eat-item {
+    float: left;
+    width: 265px;
+    margin: 20px 22px 11px 23px;
+}
+
+/*窗格里的图片盒子*/
+.building > .eat-item > .img_a_div {
+    position: relative;
+    transition: all 1s;
+    overflow: hidden;
+    height: 152px;
+}
+
+/*图片的链接*/
+.building > .eat-item > .img_a_div > a {
+    display: inline-block;
+    word-spacing: 0;
+    text-decoration: none;
+}
+
+/*图片img*/
+.building > .eat-item > .img_a_div > a > img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    transition: all 0.7s;
+}
+
+/*悬停时放大*/
+.img_a_div > a > img:hover {
+    transform: scale(1.2);
+}
+
+/*图片盒子下面的描述文字盒子*/
+.img_a_div + .textdiv {
+    width: 100%;
+    position: relative;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    font-family: "微软雅黑";
+}
+
+/*带简述文字的a标签*/
+.ictxt {
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    margin-top: 3px;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #333;
+    /*减少间距*/
+    text-decoration: none;
+}
+
+/*绿色*/
+.green {
+    color: #00ae56;
+}
+
+/*右浮动*/
+.fr {
+    float: right;
+}
+
+/*窗格的右下角文字*/
+.item-txt {
+    width: auto !important;
+    max-width: 140px;
+    text-align: right;
+    height: 30px;
+    overflow: hidden;
+}

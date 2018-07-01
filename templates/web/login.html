@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
+    {#Bootstrap需要jQuery#}
+    <script src="{% static "/flatui/other_rely/jquery-3.3.1.min.js" %}"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    {#Bootstrap4需要Popper.js#}
+    <script src="{% static "/flatui/other_rely/popper.min.js" %}" crossorigin="anonymous"></script>
+    <script src="{% static "/flatui/other_rely/video.js" %}"></script>
+
+    {#Bootstrap4(适合Flat UI)#}
+    <link href="{% static "/flatui/dist/css/vendor/bootstrap.min.css" %}" rel="stylesheet">
+    {#<script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>#}
+
+    {#Flat UI#}
+    <link href="{% static "/flatui/dist/css/flat-ui.css" %}" rel="stylesheet">
+    <script src="{% static "/flatui/dist/scripts/flat-ui.js" %}"></script>
+    <script src="{% static "/flatui/dist/scripts/application.js" %}"></script>
+
+
+    {#图标#}
+    <link rel="shortcut icon" href="{% static "/flatui/dist/favicon.ico" %}">
+
+    {#Vue#}
+    <script src="{% static "/vue/js/vue.min.js" %}"></script>
+
+    <title>登录-DietCat</title>
+</head>
+{#-------------------------------------------------------------------------------#}
+<body style="height: 100%;">
+{#整个登录部分#}
+<div class="login-screen">
+    {#有色区域#}
+    <div style="background-color: #1abc9c">
+        {#大标题#}
+        <div style="text-align: center">
+            <h1>Log in to Diet Cat</h1>
+        </div>
+
+        {#核心块#}
+        <div>
+            {#左侧脱离文档流图标#}
+            <div class="login-icon">
+                <img src="{% static "/flatui/dist/images/icons/paper-bag.svg" %}" alt="Welcome to Diet Cat"/>
+                <h4>Welcome to
+                    <small>Diet Cat</small>
+                </h4>
+            </div>
+            {#右侧表单盒子#}
+            <div class="login-form">
+                <div class="form-group">
+                    <input type="text" class="form-control login-field" value="" placeholder="DietCat账户名"
+                           id="login-name"/>
+                    <label class="login-field-icon fui-user" for="login-name"></label>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" class="form-control login-field" value="" placeholder="密码"
+                           id="login-pass"/>
+                    <label class="login-field-icon fui-lock" for="login-pass"></label>
+                </div>
+                {#点击登入进入身份验证#}
+                <a class="btn btn-primary btn-lg btn-block" href="/index">登入</a>
+                {#点击注册将打开模态框#}
+                <a class="login-link" href="#" data-toggle="modal" data-target="#lgnModal">还没注册DietCat?立即注册</a>
+            </div>
+        </div>
+    </div>
+</div>
+{#-------------------------------------------------------------------------------#}
+{#模态框#}
+<div class="modal fade" id="lgnModal" style="padding-top: 80px">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            {#模态框头部#}
+            <div class="modal-header">
+                <h4 class="modal-title">现在注册Diet Cat</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            {#模态框主体#}
+            <div class="modal-body">
+                用户名:
+                <input value="" placeholder="请输入您的昵称" class="form-control" type="text">
+                <br>
+                密码:
+                <input value="" placeholder="请输入您的密码" class="form-control" type="text">
+            </div>
+
+            {#模态框底部#}
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary">确认</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+{#-------------------------------------------------------------------------------#}
+<style>
+    {#还没找到好的背景图#}
+    body {
+    {#background-image: url("{% static "/lzh/imgs/login.jpg" %}");#}
+    }
+
+    {#整个登录部分#}
+    .login-screen {
+        height: 100%;
+        padding-top: 80px;
+    {#background-color: transparent;#}
+    }
+
+    {#登录左侧图标#}
+    .login-icon {
+        top: auto;
+        padding-top: 30px;
+    }
+</style>
+</body>
+</html>
