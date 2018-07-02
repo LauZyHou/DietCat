@@ -27,3 +27,8 @@ def getCntMsg(request):
 # 用户要进入身体信息页面
 def getBdyMsg(request):
     return render(request, r'web/bdymsg.html')
+
+
+# 用户要进入昨日打卡页面
+def getPunchPage(request):
+    return render(request, r'web/punch.html')

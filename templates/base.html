@@ -29,6 +29,10 @@
     <script src="{% static "/vue/js/vue.min.js" %}"></script>
     <title>{% block title %}默认标题{% endblock %}-DietCat</title>
 
+    {#Echarts#}
+    {#我还以为每个Echarts的HTML似乎需要独立一个Echarts.min.js渲染,原来是js全局变量冲突!#}
+    <script type="text/javascript" src="{% static "/echarts/echarts.min.js" %}"></script>
+
     {#子类HTML自己要引入的依赖#}
     {% block own-rely %}
     {% endblock %}

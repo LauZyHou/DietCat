@@ -1,0 +1,19 @@
+/*居中盒子*/
+.cntrdiv {
+    width: 100%;
+    text-align: center;
+    /*不需要下面的弹性布局居中*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}
+
+/*表单盒子*/
+.formbox {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.formbox > form {
+    width: 100%;
+    max-width: 100%;
+}

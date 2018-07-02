@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{#自己用的依赖#}
+{% block own-rely %}
+    {#静态资源目录需要重新加载#}
+    {% load static %}
+    {#其它依赖#}
+    <link href="{% static "/lzh/css/punch.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{#标题#}
+{% block title %}每日打卡{% endblock %}
+
+{#内容部分#}
+{% block content %}
+    <div class="cntrdiv">
+        <h2>DietCat每日打卡</h2>
+        <p>坚持每日打卡，DietCat将做出更准确的饮食分析。修改时间可以补充打卡。</p>
+        <hr>
+        <h4>[运动/睡觉]占比</h4>
+        <form>
+            在<input type="date" value="">，
+            你运动了<input type="text">小时，
+            你睡觉了<input type="text">小时。
+            <input type="submit" value="提交" class="btn btn-embossed btn-sm btn-primary">
+        </form>
+    </div>
+    {% include 'extern/punch_1.html' %}
+
+    <div class="cntrdiv">
+        <hr>
+        <h4>行走步数</h4>
+        <form>
+            在<input type="date" value="">，
+            你走了<input type="text">步。
+            <input type="submit" value="提交" class="btn btn-embossed btn-sm btn-primary">
+        </form>
+    </div>
+    {% include 'extern/punch_2.html' %}
+
+    <div class="cntrdiv">
+        <hr>
+        <h4>无记录打卡</h4>
+        这部分打卡不会被记录，且只能当日选择，它们会直接影响训练模型，不可修改，请谨慎选择。
+        <div class="formbox">
+            <form>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>项目</th>
+                        <th>选定</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>有氧运动</td>
+                        <td>
+                            <input type="checkbox" class="form-check-input" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>无氧运动</td>
+                        <td>
+                            <input type="checkbox" class="form-check-input" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>应酬</td>
+                        <td>
+                            <input type="checkbox" class="form-check-input" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>暴饮暴食</td>
+                        <td>
+                            <input type="checkbox" class="form-check-input" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>吸烟</td>
+                        <td>
+                            <input type="checkbox" class="form-check-input" value="">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <input type="submit" value="今天我做了以上勾选的条目" class="btn btn-block btn-lg btn-primary">
+            </form>
+        </div>
+    </div>
+{% endblock %}

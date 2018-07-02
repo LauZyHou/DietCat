@@ -24,4 +24,5 @@ urlpatterns = [
     path('logout/', mainapp_views.logOut),
     path('cntmsg/', mainapp_views.getCntMsg),
     path('bdymsg/', mainapp_views.getBdyMsg),
+    path('punch/', mainapp_views.getPunchPage),
 ]
