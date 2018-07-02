@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{#自己用的依赖#}
+{% block own-rely %}
+    {#静态资源目录需要重新加载#}
+    {% load static %}
+    {#其它依赖#}
+    <link href="{% static "/lzh/css/cntmsg.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{#标题#}
+{% block title %}账户资料{% endblock %}
+
+{#内容部分#}
+{% block content %}
+    <div class="container">
+        <div class="formbox">
+            <h3>账户资料</h3>
+            <div class="formdiv">
+                <h5>用户名：</h5>
+                <input value="" placeholder="" class="form-control" type="text">
+                <br>
+                <h5>密码：</h5>
+                <input value="" placeholder="" class="form-control" type="text">
+                <br>
+                <button class="btn btn-block btn-lg btn-primary">保存</button>
+            </div>
+        </div>
+        <div class="imgbox">
+            <div class="imgdiv">
+                <img src="{% static "/lzh/imgs/head.png" %}">
+                <button class="btn btn-block btn-lg btn-primary">上传头像</button>
+                <button class="btn btn-block btn-lg btn-danger">注销账户</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

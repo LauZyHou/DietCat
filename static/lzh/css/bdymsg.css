@@ -1,0 +1,13 @@
+/*居中盒子*/
+.cntrdiv {
+    width: 100%;
+    text-align: center;
+}
+
+.cntrdiv > a {
+    color: #2f4b93;
+}
+
+.cntrdiv > a:hover {
+    color: green;
+}

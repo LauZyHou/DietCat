@@ -19,7 +19,16 @@
                     <li><a href="#">Separated link</a></li>
                 </ul>
             </li>
-            <li><a href="#fakelink">设置</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">我的</a>
+                <span class="dropdown-arrow"></span>
+                <ul class="dropdown-menu">
+                    <li><a href="/cntmsg/">账户资料</a></li>
+                    <li><a href="/bdymsg/">身体信息</a></li>
+                    <li><a href="/logout/">注销</a></li>
+                </ul>
+            </li>
+            <li><a href="">设置</a></li>
         </ul>
         {#查询表单#}
         <form class="navbar-form form-inline my-2 my-lg-0" action="#" role="search">

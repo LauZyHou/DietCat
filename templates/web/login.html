@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     {% load static %}
@@ -31,7 +31,7 @@
     <title>登录-DietCat</title>
 </head>
 {#-------------------------------------------------------------------------------#}
-<body style="height: 100%;">
+<body>
 {#整个登录部分#}
 <div class="login-screen">
     {#有色区域#}
@@ -102,6 +102,10 @@
 </div>
 {#-------------------------------------------------------------------------------#}
 <style>
+    html, body {
+        height: 100%;
+    }
+
     {#还没找到好的背景图#}
     body {
     {#background-image: url("{% static "/lzh/imgs/login.jpg" %}");#}

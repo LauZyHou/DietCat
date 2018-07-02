@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{#自己用的依赖#}
+{% block own-rely %}
+    {#静态资源目录需要重新加载#}
+    {% load static %}
+    {#其它依赖#}
+    <link href="{% static "/lzh/css/bdymsg.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{#标题#}
+{% block title %}身体信息{% endblock %}
+
+{#内容部分#}
+{% block content %}
+    <div class="container">
+        <div class="cntrdiv">
+            <h2>DietCat用户身体信息表</h2>
+            <p>欢迎，填写必要的身体信息能让我们更好地为您提供科学的饮食服务。</p>
+        </div>
+        <form>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>条目</th>
+                    <th>值</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>性别</td>
+                    <td>
+                        <label class="radio-inline">
+                            <input type="radio" data-toggle="radio" name="sex">男
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" data-toggle="radio" name="sex">女
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>出生日期</td>
+                    <td>
+                        <input type="date" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>身高</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>体重</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>BMI(自动计算)</td>
+                    <td>自动计算</td>
+                </tr>
+                <tr>
+                    <td>血型</td>
+                    <td>
+                        <select class="form-control" id="sel1">
+                            <option>A</option>
+                            <option>B</option>
+                            <option>AB</option>
+                            <option>O</option>
+                            <option>其它</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>肺活量</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>50米短跑</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>视力(左)</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>视力(右)</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>坐位体前屈</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>立定跳远</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>1分钟跳绳</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>1分钟仰卧起坐</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>饮食偏好</td>
+                    <td>
+                        <select class="form-control" id="sel2">
+                            <option>清淡</option>
+                            <option>辛辣</option>
+                            <option>咸</option>
+                            <option>甜</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>饮食风格</td>
+                    <td>
+                        <select class="form-control" id="sel3">
+                            <option>长期应酬</option>
+                            <option>规律三餐</option>
+                            <option>一日两餐</option>
+                            <option>少食多餐</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>均日睡眠时间</td>
+                    <td>
+                        <input type="text">
+                    </td>
+                </tr>
+                <tr>
+                    <td>既往病史(按住SHIFT多选)</td>
+                    <td>
+                        <select multiple class="form-control" id="sel4">
+                            {#这个还不全面#}
+                            <option>高血压</option>
+                            <option>鼻炎</option>
+                            <option>咽炎</option>
+                            <option>关节炎</option>
+                            <option>骨质疏松</option>
+                        </select>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <input class="btn btn-block btn-lg btn-primary" type="submit" value="保存更改">
+        </form>
+        <div class="cntrdiv">
+            <a href="#">DietCat将如何使用我的身体信息?</a>
+        </div>
+    </div>
+    <script>
+
+    </script>
+{% endblock %}
