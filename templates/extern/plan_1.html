@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<body style="height: 100%; margin: 0">
+<div id="container1" style="height: 100%"></div>
+<script type="text/javascript">
+    var dom1 = document.getElementById("container1");
+    var myChart1 = echarts.init(dom1);
+    var app1 = {};
+    option = null;
+    app1.title = '极坐标系下的堆叠柱状图';
+
+    option = {
+        angleAxis: {
+            type: 'category',
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            z: 10
+        },
+        radiusAxis: {},
+        polar: {},
+        series: [{
+            type: 'bar',
+            data: [1, 2, 3, 4, 3, 5, 1],
+            coordinateSystem: 'polar',
+            name: '运动',
+            stack: 'a'
+        }, {
+            type: 'bar',
+            data: [2, 4, 6, 1, 3, 2, 1],
+            coordinateSystem: 'polar',
+            name: '睡觉',
+            stack: 'a'
+        }, {
+            type: 'bar',
+            data: [1, 2, 3, 4, 1, 2, 5],
+            coordinateSystem: 'polar',
+            name: '其它',
+            stack: 'a'
+        }],
+        legend: {
+            show: true,
+            data: ['运动', '睡觉', '其它']
+        }
+    };
+    if (option && typeof option === "object") {
+        myChart1.setOption(option, true);
+    }
+</script>
+</body>
+</html>

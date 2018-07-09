@@ -1,0 +1,17 @@
+/*居中盒子*/
+.cntrdiv {
+    width: 100%;
+    text-align: center;
+}
+
+/*表单*/
+.cntrdiv>form{
+    width: 100%;
+    height: 400px;
+    /*background-color: #79bbe7;*/
+}
+
+.cntrdiv>form>textarea{
+    width: 100%;
+    height: 70%;
+}

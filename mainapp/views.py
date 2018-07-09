@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
+# 下载文件要用
+from django.http import FileResponse
 
 
 # Create your views here.
@@ -9,7 +11,7 @@ def getLoginPage(request):
     return render(request, r'web/login.html')
 
 
-# 要去主页
+# 用户要去主页
 def getIndexPage(request):
     return render(request, r'web/index.html', {'mylst': [1 for i in range(12)]})
 
@@ -42,3 +44,29 @@ def getMealsPage(request):
 # 用户要进入设置页面
 def getSettingPage(request):
     return render(request, r'web/setting.html')
+
+
+# 用户要进入反馈页面
+def getPropPage(request):
+    return render(request, r'web/prop.html')
+
+
+# 用户要进入食物推荐页面
+def getRecommendPage(request):
+    return render(request, r'web/recommend.html',
+                  {'mylst': [1 for i in range(12)]
+                      , 'pglst': [i + 1 for i in range(10)]})
+
+
+# 用户要进入饮食计划页面
+def getPlanPage(request):
+    return render(request, r'web/plan.html')
+
+
+# 测试下载报表文件
+def testDown(request):
+    file = open(r'test/测试报表文件.txt', 'rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="mybb.txt"'
+    return response

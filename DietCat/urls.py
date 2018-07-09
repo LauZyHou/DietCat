@@ -26,5 +26,9 @@ urlpatterns = [
     path('bdymsg/', mainapp_views.getBdyMsg),
     path('punch/', mainapp_views.getPunchPage),
     path('meals/', mainapp_views.getMealsPage),
-    path('setting/',mainapp_views.getSettingPage),
+    path('setting/', mainapp_views.getSettingPage),
+    path('prop/', mainapp_views.getPropPage),
+    path('recommend/', mainapp_views.getRecommendPage),
+    path('plan/', mainapp_views.getPlanPage),
+    path('testdown/', mainapp_views.testDown),
 ]

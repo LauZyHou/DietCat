@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{#自己用的依赖#}
+{% block own-rely %}
+    {#静态资源目录需要重新加载#}
+    {% load static %}
+    {#其它依赖#}
+    <link href="{% static "/lzh/css/recommend.css" %}" rel="stylesheet">
+    <link href="{% static "/lzh/css/index.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{#标题#}
+{% block title %}用户反馈{% endblock %}
+
+{#内容部分#}
+{% block content %}
+    <div class="container">
+        <div class="cntrdiv">
+            <h2>DietCat食物推荐</h2>
+            <p>根据您的饮食偏好和身体情况，为您做出食物推荐。</p>
+            <hr>
+        </div>
+    </div>
+    {#下面这段和主页上的一样#}
+    <div class="outer">
+        {% for i in mylst %}
+            <div class="building">
+                <div class="eat-item">
+                    <div class="img_a_div">
+                        <a href="#" target="_blank">
+                            <img src="{% static "/lzh/imgs/testitem.jpg" %}">
+                        </a>
+                    </div>
+                    <div class="textdiv">
+                        <div class="itemcont">
+                            <a href="#" title="昊昊餐厅" target="_blank" class="ictxt">
+                                健康水果大拼盘
+                            </a>
+                        </div>
+                        <span class="green">美团外卖</span>
+                        <a class="item-txt fr"><span style="color: #888;">本月好评：</span>42368次</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {#换页#}
+    <div class="cntrdiv">
+        <ul class="pagination-plain">
+            <li class="previous">
+                <a href="#">Previous</a>
+            </li>
+            {% for i in pglst %}
+            <li>
+                <a href="#">{{ i }}</a>
+            </li>
+            {% endfor %}
+            <li class="next">
+                <a href="#">Newer</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

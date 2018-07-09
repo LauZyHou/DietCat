@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{#自己用的依赖#}
+{% block own-rely %}
+    {#静态资源目录需要重新加载#}
+    {% load static %}
+    {#其它依赖#}
+    <link href="{% static "/lzh/css/prop.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{#标题#}
+{% block title %}用户反馈{% endblock %}
+
+{#内容部分#}
+{% block content %}
+    <div class="container">
+        <div class="cntrdiv">
+            <h2>DietCat用户反馈</h2>
+            <p>反馈您的建议、遇到的bug等将帮助改进DietCat。</p>
+            <hr>
+            <form>
+                <textarea name="ok"></textarea>
+                <input class="btn btn-block btn-lg btn-primary" type="submit" value="提交">
+                <input class="btn btn-block btn-lg btn-secondary" type="reset" value="重置">
+            </form>
+        </div>
+    </div>
+{% endblock %}

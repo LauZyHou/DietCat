@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{#自己用的依赖#}
+{% block own-rely %}
+    {#静态资源目录需要重新加载#}
+    {% load static %}
+    {#其它依赖#}
+    <link href="{% static "/lzh/css/plan.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{#标题#}
+{% block title %}饮食计划{% endblock %}
+
+{#内容部分#}
+{% block content %}
+    <div class="container">
+        <div class="cntrdiv">
+            <h2>DietCat长期饮食计划</h2>
+            <p>以下条目是根据您近期的情况制定的饮食和生活计划，您可以<a href="/testdown/">下载报表</a>。</p>
+        </div>
+    </div>
+    {#--------------------------------#}
+    <div class="container">
+        <hr>
+        <h4>睡眠[不规律],睡眠与运动[较少]</h4>
+    </div>
+    {% include "extern/plan_1.html" %}
+    {#--------------------------------#}
+    <div class="container">
+        <hr>
+        <h4>应酬或暴饮暴食[太多]</h4>
+    </div>
+    {#--------------------------------#}
+    <div class="container">
+        <hr>
+        <h4>身体素质[一般]</h4>
+    </div>
+    {% include "extern/plan_3.html" %}
+{% endblock %}
