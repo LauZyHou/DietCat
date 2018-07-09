@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{#自己用的依赖#}
+{% block own-rely %}
+    {#静态资源目录需要重新加载#}
+    {% load static %}
+    {#其它依赖#}
+    <link href="{% static "/lzh/css/time.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{#标题#}
+{% block title %}就餐时间管理{% endblock %}
+
+{#内容部分#}
+{% block content %}
+    <div class="container">
+        <div class="cntrdiv">
+            <h2>DietCat就餐时间管理</h2>
+            <p>欢迎，根据您的情况为您提供就餐时间建议。</p>
+        </div>
+        <hr>
+        <h4>早餐</h4>
+        <hr>
+        <h4>午餐</h4>
+    </div>
+{% endblock %}

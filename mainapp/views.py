@@ -32,3 +32,7 @@ def getBdyMsg(request):
 # 用户要进入昨日打卡页面
 def getPunchPage(request):
     return render(request, r'web/punch.html')
+
+# 用户要进入就餐时间管理页面
+def getTimePage(request):
+    return render(request,r'web/time.html')
