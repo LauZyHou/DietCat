@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{#自己用的依赖#}
+{% block own-rely %}
+    {#静态资源目录需要重新加载#}
+    {% load static %}
+    {#其它依赖#}
+    <link href="{% static "/lzh/css/setting.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{#标题#}
+{% block title %}设置{% endblock %}
+
+{#内容部分#}
+{% block content %}
+    <div class="container">
+        <div class="cntrdiv">
+            <h2>设置</h2>
+            <p>希望DietCat如何为您服务?</p>
+            <hr>
+            {#----#}
+            <button class="btn btn-hg btn-primary">
+                Boss Button
+            </button>
+            {#----#}
+        </div>
+    </div>
+{% endblock %}

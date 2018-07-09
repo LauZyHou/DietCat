@@ -25,5 +25,6 @@ urlpatterns = [
     path('cntmsg/', mainapp_views.getCntMsg),
     path('bdymsg/', mainapp_views.getBdyMsg),
     path('punch/', mainapp_views.getPunchPage),
-    path('time/', mainapp_views.getTimePage),
+    path('meals/', mainapp_views.getMealsPage),
+    path('setting/',mainapp_views.getSettingPage),
 ]

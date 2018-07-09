@@ -1,0 +1,82 @@
+/*居中盒子*/
+.cntrdiv {
+    width: 100%;
+    text-align: center;
+}
+
+/*三餐盒子*/
+.mealdiv_A, .mealdiv_B {
+    height: 200px;
+    background-color: #00a1cb;
+    overflow: hidden;
+}
+
+/*图片盒子*/
+.picdiv {
+    width: 160px;
+    height: 160px;
+    margin: 20px;
+    background-color: #eff0f2;
+
+    border-radius: 50%;
+
+    position: relative;
+    transition: all 1s;
+    overflow: hidden;
+}
+
+/*图片盒子(A类)*/
+.mealdiv_A > .picdiv {
+    float: left;
+}
+
+/*图片盒子(B类)*/
+.mealdiv_B > .picdiv {
+    float: right;
+}
+
+/*描述盒子*/
+.txtdiv {
+    width: 840px;
+    height: 160px;
+    margin: 20px;
+    background-color: #eff0f2;
+}
+
+/*描述盒子(A类)*/
+.mealdiv_A > .txtdiv {
+    float: right;
+}
+
+/*描述盒子(B类)*/
+.mealdiv_B > .txtdiv {
+    float: left;
+}
+
+/*描述盒子里的的标题*/
+.txtdiv > .ttlbox {
+    background-color: #79bbe7;
+}
+
+/*图片的链接*/
+.picdiv > a {
+    display: inline-block;
+    word-spacing: 0;
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+}
+
+/*图片img*/
+.picdiv > a > img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    transition: all 0.7s;
+}
+
+/*悬停时放大*/
+.picdiv > a > img:hover {
+    transform: scale(1.2);
+}

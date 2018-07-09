@@ -33,6 +33,12 @@ def getBdyMsg(request):
 def getPunchPage(request):
     return render(request, r'web/punch.html')
 
-# 用户要进入就餐时间管理页面
-def getTimePage(request):
-    return render(request,r'web/time.html')
+
+# 用户要进入一日三餐建议页面
+def getMealsPage(request):
+    return render(request, r'web/meals.html')
+
+
+# 用户要进入设置页面
+def getSettingPage(request):
+    return render(request, r'web/setting.html')

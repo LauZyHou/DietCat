@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{#自己用的依赖#}
+{% block own-rely %}
+    {#静态资源目录需要重新加载#}
+    {% load static %}
+    {#其它依赖#}
+    <link href="{% static "/lzh/css/meals.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{#标题#}
+{% block title %}一日三餐建议{% endblock %}
+
+{#内容部分#}
+{% block content %}
+    <div class="container">
+        <div class="cntrdiv">
+            <h2>DietCat一日三餐建议</h2>
+            <p>欢迎，根据您的情况为您提供一日三餐建议。</p>
+            <hr>
+            <h4>早餐</h4>
+            <div class="mealdiv_A">
+                <div class="picdiv">
+                    <a href="#" target="_blank">
+                        <img src="{% static "/lzh/imgs/yuan.jpeg" %}">
+                    </a>
+                </div>
+                <div class="txtdiv">
+                    <div class="ttlbox">
+                        <h4>袁姐桂林特色米粉</h4>
+                    </div>
+                </div>
+            </div>
+            {#--------------------#}
+            <hr>
+            <h4>午餐</h4>
+            <div class="mealdiv_B">
+                <div class="picdiv">
+                    <a href="#" target="_blank">
+                        <img src="{% static "/lzh/imgs/yuan.jpeg" %}">
+                    </a>
+                </div>
+                <div class="txtdiv">
+                    <div class="ttlbox">
+                        <h4>袁姐桂林特色米粉</h4>
+                    </div>
+                </div>
+            </div>
+            {#--------------------#}
+            <hr>
+            <h4>晚餐</h4>
+            <div class="mealdiv_A">
+                <div class="picdiv">
+                    <a href="#" target="_blank">
+                        <img src="{% static "/lzh/imgs/yuan.jpeg" %}">
+                    </a>
+                </div>
+                <div class="txtdiv">
+                    <div class="ttlbox">
+                        <h4>袁姐桂林特色米粉</h4>
+                    </div>
+                </div>
+            </div>
+            {#--------------------#}
+            <hr>
+            <h4>小食</h4>
+            <div class="mealdiv_B">
+                <div class="picdiv">
+                    <a href="#" target="_blank">
+                        <img src="{% static "/lzh/imgs/yuan.jpeg" %}">
+                    </a>
+                </div>
+                <div class="txtdiv">
+                    <div class="ttlbox">
+                        <h4>袁姐桂林特色米粉</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
