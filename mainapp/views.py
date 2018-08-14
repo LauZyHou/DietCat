@@ -70,3 +70,9 @@ def testDown(request):
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = 'attachment;filename="mybb.txt"'
     return response
+
+
+# 用户要进入某个具体的餐馆页面
+def getEateryById(request, id):
+    print("获得了餐馆的id", id)
+    return render(request,r'web/detail/eatery.html')

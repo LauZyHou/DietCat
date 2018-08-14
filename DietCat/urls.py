@@ -31,4 +31,5 @@ urlpatterns = [
     path('recommend/', mainapp_views.getRecommendPage),
     path('plan/', mainapp_views.getPlanPage),
     path('testdown/', mainapp_views.testDown),
+    path('eatery/<str:id>', mainapp_views.getEateryById),
 ]
