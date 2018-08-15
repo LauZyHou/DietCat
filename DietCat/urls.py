@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from mainapp import views as mainapp_views
+from mainapp import ajax as mainapp_ajax
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -32,4 +33,5 @@ urlpatterns = [
     path('plan/', mainapp_views.getPlanPage),
     path('testdown/', mainapp_views.testDown),
     path('eatery/<str:id>', mainapp_views.getEateryById),
+    path('subprop/', mainapp_ajax.subProp),
 ]

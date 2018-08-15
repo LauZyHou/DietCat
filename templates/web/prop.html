@@ -19,11 +19,32 @@
             <h2>DietCat用户反馈</h2>
             <p>反馈您的建议、遇到的bug等将帮助改进DietCat。</p>
             <hr>
-            <form>
-                <textarea name="ok"></textarea>
-                <input class="btn btn-block btn-lg btn-primary" type="submit" value="提交">
-                <input class="btn btn-block btn-lg btn-secondary" type="reset" value="重置">
-            </form>
+            {#取消了form的文本区域#}
+            <textarea id="prop"></textarea>
+            <button class="btn btn-block btn-lg btn-primary" onclick="subProp();">提交</button>
+            <button class="btn btn-block btn-lg btn-secondary" onclick="resetProp();">重置</button>
         </div>
     </div>
+    <script>
+        {#为了用户体验,这里用ajax异步传输#}
+
+        function subProp() {
+            $.ajax({
+                type: 'POST',
+                url: '/subprop/',
+                data: {'prop': $('#prop').val()},
+                success: function (result) {
+                    {#这里回调#}
+                    if ('1' === result) {
+                        window.alert("提交成功!");
+                    } else if ('2' === result) {
+                        window.alert("请勿频繁提交!");
+                    }
+                    else {
+                        window.alert("未知的错误!")
+                    }
+                }
+            })
+        }
+    </script>
 {% endblock %}

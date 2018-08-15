@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>餐馆</title>
-</head>
-<body>
-    这是个具体的餐馆
-</body>
-</html>
+{% extends 'base.html' %}
+
+{#自己用的依赖#}
+{% block own-rely %}
+    {#静态资源目录需要重新加载#}
+    {% load static %}
+    {#其它依赖#}
+    <link href="{% static "/lzh/css/detai/eatery.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{#标题#}
+{% block title %}饮食计划{% endblock %}
+
+{#内容部分#}
+{% block content %}
+    <div class="container" id="tit">
+        <div class="cntrdiv">
+            <h2>三米粥铺(商铺页)</h2>
+            <p>应该取消本页面，在MongoDB中存储_id和url的关系，跳转到美团或者饿了吗外卖的具体页</p>
+        </div>
+    </div>
+    {#--------------------------------#}
+{% endblock %}
