@@ -11,9 +11,25 @@ def getLoginPage(request):
     return render(request, r'web/login.html')
 
 
-# 用户要去主页
+# 用户要去主页(可能是登录操作,也可能就是单纯的页面切换操作)
 def getIndexPage(request):
-    return render(request, r'web/index.html', {'mylst': [1 for i in range(12)]})
+    # 看看Session里有没有,有就直接进不做校验
+    print("从Session里检查")
+    if request.session.get('loginId') is not None:
+        print("Session校验成功")
+        return render(request, r'web/index.html', {'mylst': [1 for i in range(12)]})
+    elif request.method == 'POST':
+        # 获取用户名和密码
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+        # FIXME 使用用户名和密码校验身份,并从DB中获取该用户id
+        # 将登录身份存进session里
+        request.session['loginId'] = 1234
+        print("存进了Session里")
+        return render(request, r'web/index.html', {'mylst': [1 for i in range(12)]})
+    else:
+        # 请先登录!
+        return render(request, r'web/login.html')
 
 
 # 用户要注销登录
@@ -75,4 +91,4 @@ def testDown(request):
 # 用户要进入某个具体的餐馆页面
 def getEateryById(request, id):
     print("获得了餐馆的id", id)
-    return render(request,r'web/detail/eatery.html')
+    return render(request, r'web/detail/eatery.html')

@@ -20,7 +20,7 @@ from mainapp import ajax as mainapp_ajax
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('login/', mainapp_views.getLoginPage),
+    path('firstuse/', mainapp_views.getLoginPage),
     path('index/', mainapp_views.getIndexPage),
     path('logout/', mainapp_views.logOut),
     path('cntmsg/', mainapp_views.getCntMsg),

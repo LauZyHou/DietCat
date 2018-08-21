@@ -52,21 +52,23 @@
             </div>
             {#右侧表单盒子#}
             <div class="login-form">
-                <div class="form-group">
-                    <input type="text" class="form-control login-field" value="" placeholder="DietCat账户名"
-                           id="login-name"/>
-                    <label class="login-field-icon fui-user" for="login-name"></label>
-                </div>
+                <form action="/index/" method="post">
+                    <div class="form-group">
+                        <input type="text" class="form-control login-field" name="username" placeholder="DietCat账户名"
+                               id="login-name"/>
+                        <label class="login-field-icon fui-user" for="login-name"></label>
+                    </div>
 
-                <div class="form-group">
-                    <input type="password" class="form-control login-field" value="" placeholder="密码"
-                           id="login-pass"/>
-                    <label class="login-field-icon fui-lock" for="login-pass"></label>
-                </div>
-                {#点击登入进入身份验证#}
-                <a class="btn btn-primary btn-lg btn-block" href="/index">登入</a>
-                {#点击注册将打开模态框#}
-                <a class="login-link" href="#" data-toggle="modal" data-target="#lgnModal">还没注册DietCat?立即注册</a>
+                    <div class="form-group">
+                        <input type="password" class="form-control login-field" name="password" placeholder="密码"
+                               id="login-pass"/>
+                        <label class="login-field-icon fui-lock" for="login-pass"></label>
+                    </div>
+                    {#点击登入进入身份验证#}
+                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="登入">
+                    {#点击注册将打开模态框#}
+                    <a class="login-link" href="#" data-toggle="modal" data-target="#lgnModal">还没注册DietCat?立即注册</a>
+                </form>
             </div>
         </div>
     </div>
@@ -76,27 +78,28 @@
 <div class="modal fade" id="lgnModal" style="padding-top: 80px">
     <div class="modal-dialog">
         <div class="modal-content">
-
             {#模态框头部#}
             <div class="modal-header">
                 <h4 class="modal-title">现在注册Diet Cat</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
+            {# 注册表单 #}
+            <form action="/register/" method="post">
+                {#模态框主体#}
+                <div class="modal-body">
+                    用户名:
+                    <input name="username" placeholder="请输入您的昵称" class="form-control" type="text">
+                    <br>
+                    密码:
+                    <input name="password" placeholder="请输入您的密码" class="form-control" type="text">
+                </div>
 
-            {#模态框主体#}
-            <div class="modal-body">
-                用户名:
-                <input value="" placeholder="请输入您的昵称" class="form-control" type="text">
-                <br>
-                密码:
-                <input value="" placeholder="请输入您的密码" class="form-control" type="text">
-            </div>
-
-            {#模态框底部#}
-            <div class="modal-footer">
-                <a href="#" class="btn btn-primary">确认</a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-            </div>
+                {#模态框底部#}
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="确认">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
