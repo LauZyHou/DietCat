@@ -60,6 +60,6 @@ mongorestore.exe -h 127.0.0.1:27017 -d dietcat E:\WorkSpace\PyCharm\DietCat\test
 <br>
 【2】基本完成了所有功能页。
 ### 2018年8月14日
-完善页面
+完善页面。
 ### 2018年8月22日
-完成注册/登入/登出，添加DAO层，添加MongoDB数据库文件在test目录的子目录下。
+完成注册/登入/登出，添加DAO层，添加MongoDB数据库文件在test目录的子目录下。当数据库结构或内容发生重要改变时需要备份到此。
