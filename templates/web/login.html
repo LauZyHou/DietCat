@@ -38,7 +38,23 @@
     <div style="background-color: #1abc9c">
         {#大标题#}
         <div style="text-align: center">
-            <h1>Log in to Diet Cat</h1>
+            <h1>
+                {% if stat is None %}
+                    登录DietCat饮食专家
+                {% elif stat == 0 %}
+                    注册成功,现在登录
+                {% elif stat == -1 %}
+                    字段缺失
+                {% elif stat == -2 %}
+                    用户名已经被注册过了
+                {% elif stat == -3 %}
+                    非法的请求形式
+                {% elif stat == -4 %}
+                    登录失败
+                {% elif stat == -5 %}
+                    请先登录
+                {% endif %}
+            </h1>
         </div>
 
         {#核心块#}
@@ -88,7 +104,9 @@
                 {#模态框主体#}
                 <div class="modal-body">
                     用户名:
-                    <input name="username" placeholder="请输入您的昵称" class="form-control" type="text">
+                    <input name="username"
+                           placeholder="请输入您的昵称"
+                           class="form-control" type="text">
                     <br>
                     密码:
                     <input name="password" placeholder="请输入您的密码" class="form-control" type="text">

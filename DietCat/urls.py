@@ -34,4 +34,5 @@ urlpatterns = [
     path('testdown/', mainapp_views.testDown),
     path('eatery/<str:id>', mainapp_views.getEateryById),
     path('subprop/', mainapp_ajax.subProp),
+    path('register/',mainapp_views.register),
 ]
