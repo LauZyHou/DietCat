@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse
 # 下载文件要用
 from django.http import FileResponse
 from mainapp import dao as mainapp_dao
+import datetime
 
 
 # Create your views here.
@@ -84,7 +85,9 @@ def getBdyMsg(request):
 
 # 用户要进入昨日打卡页面
 def getPunchPage(request):
-    return render(request, r'web/punch.html')
+    # 获取服务器时间
+    serverDate = datetime.datetime.now().strftime('%Y-%m-%d')
+    return render(request, r'web/punch.html', {'serverDate': serverDate})
 
 
 # 用户要进入一日三餐建议页面
