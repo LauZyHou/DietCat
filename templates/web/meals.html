@@ -28,7 +28,16 @@
                 </div>
                 <div class="txtdiv">
                     <div class="ttlbox">
-                        <h4>袁姐桂林特色米粉</h4>
+                        <h4 id="brkfst">袁姐桂林特色米粉</h4>
+                    </div>
+                    <br>
+                    <div class="a-row">
+                        评分：
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',1);">1</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',2);">2</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',3);">3</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',4);">4</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',5);">5</button>
                     </div>
                 </div>
             </div>
@@ -43,7 +52,16 @@
                 </div>
                 <div class="txtdiv">
                     <div class="ttlbox">
-                        <h4>袁姐桂林特色米粉</h4>
+                        <h4 id="lnch">袁姐桂林特色米粉</h4>
+                    </div>
+                    <br>
+                    <div class="a-row">
+                        评分：
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('lnch',1);">1</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('lnch',2);">2</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('lnch',3);">3</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('lnch',4);">4</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('lnch',5);">5</button>
                     </div>
                 </div>
             </div>
@@ -58,7 +76,16 @@
                 </div>
                 <div class="txtdiv">
                     <div class="ttlbox">
-                        <h4>袁姐桂林特色米粉</h4>
+                        <h4 id="dnr">袁姐桂林特色米粉</h4>
+                    </div>
+                    <br>
+                    <div class="a-row">
+                        评分：
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('dnr',1);">1</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('dnr',2);">2</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('dnr',3);">3</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('dnr',4);">4</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('dnr',5);">5</button>
                     </div>
                 </div>
             </div>
@@ -73,10 +100,44 @@
                 </div>
                 <div class="txtdiv">
                     <div class="ttlbox">
-                        <h4>袁姐桂林特色米粉</h4>
+                        <h4 id="snks">袁姐桂林特色米粉</h4>
+                    </div>
+                    <br>
+                    <div class="a-row">
+                        评分：
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('snks',1);">1</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('snks',2);">2</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('snks',3);">3</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('snks',4);">4</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('snks',5);">5</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        {#为了用户体验,这里用ajax异步传输#}
+        {# time:用餐时段(用于获取菜名),score:对这道菜打了几分 #}
+
+        function subScore(time, score) {
+            $.ajax({
+                type: 'POST',
+                url: '/subscore/',
+                data: {'foodName': $('#' + time).text(), 'score': score},
+                success: function (result) {
+                    {#FIXME 这里需要改变按钮颜色#}
+                    if ('1' === result) {
+                        window.alert("提交成功!");
+                    } else if ('3' === result) {
+                        window.alert("Session中没有该用户!请先登录!");
+                    } else if ('2' === result) {
+                        window.alert("仅支持POST方式!")
+                    }
+                    else {
+                        window.alert("未知的错误!")
+                    }
+                }
+            })
+        }
+    </script>
 {% endblock %}
