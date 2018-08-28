@@ -21,3 +21,8 @@ def addDocInUser(dict):
 # 按字典查询第一个user记录
 def firstDocInUser(dict):
     return db_dietcat.user.find_one(dict)  # 可能是None
+
+
+# 修改一个满足条件的user
+def updateOneUser(dict_where,dict_set):
+    db_dietcat.user.update(dict_where,dict_set)  # update方法只更新一个

@@ -36,4 +36,6 @@ urlpatterns = [
     path('subprop/', mainapp_ajax.subProp),
     path('register/', mainapp_views.register),
     path('subscore/', mainapp_ajax.subScore),
+    path('updatemsg/', mainapp_ajax.updateMsg),
+    path('uploadhead/', mainapp_ajax.uploadHead),
 ]

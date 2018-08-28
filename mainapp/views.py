@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
+from bson.objectid import ObjectId
 # 下载文件要用
 from django.http import FileResponse
 from mainapp import dao as mainapp_dao
@@ -39,9 +40,7 @@ def getLoginPage(request):
 def getIndexPage(request):
     mylst = [1 for i in range(12)]  # 方便开发用
     # 看看Session里有没有,有就直接进不做校验
-    print("从Session里检查")
     if request.session.get('_id') is not None and request.session.get('username') is not None:
-        print("Session校验成功")
         return render(request, r'web/index.html', {'mylst': mylst})
     # 如果是登录操作
     elif request.method == 'POST':
@@ -64,7 +63,7 @@ def getIndexPage(request):
         return render(request, r'web/index.html', {'mylst': mylst})
     else:
         # 更新:不登录也可以去index页
-        #return render(request, r'web/login.html', {'stat': -5})
+        # return render(request, r'web/login.html', {'stat': -5})
         return render(request, r'web/index.html', {'mylst': mylst})
 
 
@@ -76,7 +75,15 @@ def logOut(request):
 
 # 用户要进入账户资料页面
 def getCntMsg(request):
-    return render(request, r'web/cntmsg.html')
+    # 通过检查Session检验是否登录了
+    userId = request.session.get('_id')
+    if userId is None:
+        return render(request, r'web/login.html', {'stat': -5})
+    # 查询用户名和密码
+    user = mainapp_dao.firstDocInUser({"_id": ObjectId(userId)})
+    username = user.get('username')
+    password = user.get('password')
+    return render(request, r'web/cntmsg.html', {'userId': userId, 'username': username, 'password': password})
 
 
 # 用户要进入身体信息页面

@@ -19,20 +19,86 @@
             <h3>账户资料</h3>
             <div class="formdiv">
                 <h5>用户名：</h5>
-                <input value="" placeholder="" class="form-control" type="text">
+                <input id="username" value="" placeholder="{{ username }}" class="form-control" type="text">
                 <br>
                 <h5>密码：</h5>
-                <input value="" placeholder="" class="form-control" type="text">
+                <input id="password" value="" placeholder="{{ password }}" class="form-control" type="text">
                 <br>
-                <button class="btn btn-block btn-lg btn-primary">保存</button>
+                <button class="btn btn-block btn-lg btn-primary" onclick="updateMsg();">保存</button>
             </div>
         </div>
         <div class="imgbox">
             <div class="imgdiv">
-                <img src="{% static "/lzh/imgs/head.png" %}">
-                <button class="btn btn-block btn-lg btn-primary">上传头像</button>
-                <button class="btn btn-block btn-lg btn-danger">删除账户</button>
+                <img src="{% static "/userpic/" %}{{ userId }}.jpg">
+                <input type="file" name="file" id="file_upload">
+                <button class="btn btn-block btn-lg btn-primary" onclick="uploadHead();">上传头像</button>
+                <button class="btn btn-block btn-lg btn-danger" onclick="deleteThisUser();">删除账户</button>
             </div>
         </div>
     </div>
+    <script>
+        {# 更新账户信息 #}
+
+        function updateMsg() {
+            $.ajax({
+                type: 'POST',
+                url: '/updatemsg/',
+                data: {'username': $('#username').val(), 'password': $('#password').val()},
+                success: function (result) {
+                    if ('1' === result) {
+                        window.alert("修改成功!");
+                    } else if ('3' === result) {
+                        window.alert("Session中没有该用户!请先登录!");
+                    } else if ('2' === result) {
+                        window.alert("无效的提交方式!");
+                    } else if ('4' === result) {
+                        window.alert("字段缺失!");
+                    } else if ('5' === result) {
+                        window.alert("密码太短了!");
+                    } else if ('6' === result) {
+                        window.alert("用户名已经被占用了!换一个吧");
+                    } else {
+                        window.alert("[debug]未知的错误!");
+                    }
+                }
+            })
+        }
+
+        {# 上传头像 #}
+
+        function uploadHead() {
+            //文件信息写入变量中
+            var form_data = new FormData();
+            var file_info = $('#file_upload')[0].files[0];
+            form_data.append('file', file_info);
+            //通过Ajax上传
+            $.ajax({
+                type: 'POST',
+                url: '/uploadhead/',
+                data: form_data,
+                processData: false,  // tell jquery not to process the data
+                contentType: false, // tell jquery not to set contentType
+                success: function (result) {
+                    if ('1' === result) {
+                        window.alert("上传成功!");
+                        location.reload(true);
+                    } else if ('3' === result) {
+                        window.alert("Session中没有该用户!请先登录!");
+                    } else if ('2' === result) {
+                        window.alert("无效的提交方式!");
+                    } else if ('4' === result) {
+                        window.alert("请选择要上传的图片!");
+                    } else {
+                        window.alert("[debug]未知的错误!");
+                    }
+                }
+            })
+        }
+
+        {# 删除本账户 #}
+
+        function deleteThisUser() {
+            window.alert("删个屁");
+        }
+    </script>
 {% endblock %}

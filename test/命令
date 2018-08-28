@@ -1,0 +1,2 @@
+恢复用户名和密码:
+db.user.update({},{'$set':{'username':'lzh','password':'123'}})
