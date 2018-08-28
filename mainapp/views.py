@@ -63,8 +63,9 @@ def getIndexPage(request):
         print("存进了Session里")
         return render(request, r'web/index.html', {'mylst': mylst})
     else:
-        # 请先登录!
-        return render(request, r'web/login.html', {'stat': -5})
+        # 更新:不登录也可以去index页
+        #return render(request, r'web/login.html', {'stat': -5})
+        return render(request, r'web/index.html', {'mylst': mylst})
 
 
 # 用户要注销登录

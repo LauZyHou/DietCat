@@ -52,7 +52,7 @@
                 {% elif stat == -4 %}
                     登录失败
                 {% elif stat == -5 %}
-                    请先登录
+                    请先登录(暂时作废,8月28日)
                 {% endif %}
             </h1>
         </div>
@@ -82,6 +82,8 @@
                     </div>
                     {#点击登入进入身份验证#}
                     <input class="btn btn-primary btn-lg btn-block" type="submit" value="登入">
+                    {# 逛一逛 #}
+                    <a class="btn btn-secondary btn-lg btn-block" href="/index">逛一逛</a>
                     {#点击注册将打开模态框#}
                     <a class="login-link" href="#" data-toggle="modal" data-target="#lgnModal">还没注册DietCat?立即注册</a>
                 </form>
