@@ -18,6 +18,8 @@ from django.urls import path
 from mainapp import views as mainapp_views
 from mainapp import ajax as mainapp_ajax
 
+
+
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('firstuse/', mainapp_views.getLoginPage),
