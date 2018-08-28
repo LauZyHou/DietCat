@@ -8,10 +8,9 @@ client = MongoClient('localhost', 27017)
 db = client['dietcat']
 posts = db.ShopFood
 
-
-data=pd.read_csv('ShopFood.csv',sep=',')
+data = pd.read_csv('ShopFood.csv', sep=',')
 print(data)
-a=data.loc[data['推荐人数']>0]
+a = data.loc[data['推荐人数'] > 0]
 for item in np.array(data):
     post_data = {
         '商铺名称': item[0],

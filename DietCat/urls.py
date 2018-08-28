@@ -18,8 +18,6 @@ from django.urls import path
 from mainapp import views as mainapp_views
 from mainapp import ajax as mainapp_ajax
 
-
-
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('firstuse/', mainapp_views.getLoginPage),
@@ -31,11 +29,12 @@ urlpatterns = [
     path('meals/', mainapp_views.getMealsPage),
     path('setting/', mainapp_views.getSettingPage),
     path('prop/', mainapp_views.getPropPage),
-    path('recommend/', mainapp_views.getRecommendPage),
+    path('recommend/<str:page>', mainapp_views.getRecommendPage),
     path('plan/', mainapp_views.getPlanPage),
     path('testdown/', mainapp_views.testDown),
     path('eatery/<str:id>', mainapp_views.getEateryById),
     path('subprop/', mainapp_ajax.subProp),
     path('register/', mainapp_views.register),
     path('subscore/', mainapp_ajax.subScore),
+    path('gotomeal/<str:id>', mainapp_views.addEval),
 ]

@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # 下载文件要用
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseRedirect
 from mainapp import dao as mainapp_dao
 from mainapp import recommend as mainapp_RMD
 import datetime
+
+print('view')
 global RMD
-RMD=mainapp_RMD.FoodRMD()
+RMD = mainapp_RMD.FoodRMD()
 
 
 # Create your views here.
@@ -122,7 +124,6 @@ def getPunchPage(request):
         return render(request, r'web/login.html', {'stat': -5})
     '''
 
-
     return render(request, r'web/punch.html', {'serverDate': serverDate})
 
 
@@ -142,16 +143,16 @@ def getPropPage(request):
 
 
 # 用户要进入食物推荐页面
-def getRecommendPage(request):
+def getRecommendPage(request, page='1'):
     username = request.session.get('username')
     print(username)
-    recommend=RMD.Single_Recommand(username,60)
-    print(recommend)
-    RecommendList=mainapp_dao.RecommendList(recommend)
-    print(request.session)
+    recommend = RMD.Single_Recommand(username, 70)
+    #    print(recommend)
+    RecommendList = mainapp_dao.RecommendList(recommend)[12 * (int(page) - 1):12 * (int(page))]
     return render(request, r'web/recommend.html',
-                  {'mylst': RecommendList
-                      , 'pglst': [i + 1 for i in range(5)]})
+                  {'mylst': RecommendList,
+                   'pglst': [i + 1 for i in range(5)],
+                   'page': int(page)})
 
 
 # 用户要进入饮食计划页面
@@ -172,3 +173,12 @@ def testDown(request):
 def getEateryById(request, id):
     print("获得了餐馆的id", id)
     return render(request, r'web/detail/eatery.html')
+
+
+# 通过跳转界面添加用户评价
+def addEval(request, id):
+    print("获得了餐馆的id", id)
+    username = request.session.get('username')
+    RMD.AddEval(username, mainapp_dao.ID2ShopName(id))
+    RMD.AfferADD(username, mainapp_dao.ID2ShopName(id))
+    return HttpResponseRedirect(mainapp_dao.ID2Pic(id))

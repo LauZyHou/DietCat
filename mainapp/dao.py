@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 import pymongo
+from bson.objectid import ObjectId
 import re
+
 # 连接到MongoDB
 conn = MongoClient('127.0.0.1', 27017)
 # 获取dietcat这个DB对象
@@ -23,9 +25,19 @@ def firstDocInUser(dict):
     return db_dietcat.user.find_one(dict)  # 可能是None
 
 
-
 def RecommendList(list):
-    RMDLIST=[]
+    RMDLIST = []
     for i in list:
-        RMDLIST.append(db_dietcat.ShopFood.find_one({'商铺名称':i.split("-")[0],'菜品':i.split("-")[1]}))
+        RMDfood = db_dietcat.ShopFood.find_one({'商铺名称': i.split("-")[0], '菜品': i.split("-")[1]})
+        RMDfood['id'] = RMDfood.get('_id').__str__()
+        RMDLIST.append(RMDfood)
     return RMDLIST
+
+
+def ID2Pic(id):
+    return db_dietcat.ShopFood.find_one({'_id': ObjectId(id)})['商铺链接']
+
+
+def ID2ShopName(id):
+    return db_dietcat.ShopFood.find_one({'_id': ObjectId(id)})['商铺名称'] + "-" + \
+           db_dietcat.ShopFood.find_one({'_id': ObjectId(id)})['菜品']

@@ -28,13 +28,13 @@
             <div class="building">
                 <div class="eat-item">
                     <div class="img_a_div">
-                        <a href="{{ i.商铺链接 }}" target="_blank">
+                        <a href="/gotomeal/{{ i.id }}" target="_blank">
                             <img src={{ i.菜品图标网址 }}>
                         </a>
                     </div>
                     <div class="textdiv">
                         <div class="itemcont">
-                            <a href="{{ i.商铺链接 }}" title="{{ i.商铺名称 }}" target="_blank" class="ictxt">
+                            <a href="/gotomeal/{{ i.id }}" title="{{ i.商铺名称 }}" target="_blank" class="ictxt">
                                 {{ i.菜品 }}
                             </a>
                         </div>
@@ -49,15 +49,15 @@
     <div class="cntrdiv">
         <ul class="pagination-plain">
             <li class="previous">
-                <a href="#">Previous</a>
+                <a href="/recommend/1">Previous</a>
             </li>
             {% for i in pglst %}
-            <li>
-                <a href="{{ i }}">{{ i }}</a>
-            </li>
+                <li>
+                    <a href="/recommend/{{ i }}">{{ i }}</a>
+                </li>
             {% endfor %}
             <li class="next">
-                <a href="#">Newer</a>
+                <a href="/recommend/{{ page|add:1 }}">Next</a>
             </li>
         </ul>
     </div>
