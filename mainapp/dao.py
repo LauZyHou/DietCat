@@ -31,6 +31,10 @@ def updateOneUser(dict_where, dict_set):
     db_dietcat.user.update(dict_where, dict_set)  # update方法只更新一个
 
 
+def username2ID(name):
+    return db_dietcat.user.find_one({'username':name}).get('_id').__str__()  # 可能是None
+
+
 def RecommendList(list):
     RMDLIST = []
     for i in list:
@@ -94,3 +98,24 @@ def hotFood():
 def FoodNotEnough(num=70):
     food = db_dietcat.FoodEval.aggregate([{"$sample": {"size": num}}])
     return [item['菜品'] for item in food]
+
+
+def updateuserdata(dict_where, dict_set):
+    db_dietcat.UserData.update(dict_where, dict_set)
+
+
+def IFdateinData(dict):
+    return db_dietcat.UserData.find_one(dict)
+
+
+def inputuserdata(useid, date, sleeptime=None, sporttime=None, walk=None, joblist=None, foodlist=None):
+    result = db_dietcat.UserData.insert_one({
+        '用户': useid,
+        '时间': date,
+        '睡眠时长': sleeptime,
+        '运动时长': sporttime,
+        '步行距离': walk,
+        '工作': joblist,
+        '食物': foodlist,
+    })
+    print('One post: {0}'.format(result.inserted_id))

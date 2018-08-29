@@ -45,9 +45,9 @@ def subScore(request):
         score = request.POST.get('score')
         print('[ajax获取]打分值:', score)
         # TODO 调用DAO写入数据库
-        RMD.AddEval(userId, foodName, int(score))
+        RMD.AddEval(mainapp_dao.username2ID(userId), foodName, int(score))
         # TODO 影响训练模型
-        RMD.AfferADD(userId, foodName, int(score))
+        RMD.AfferADD(mainapp_dao.username2ID(userId), foodName, int(score))
         return HttpResponse('1')
     return HttpResponse('2')
 
@@ -126,3 +126,5 @@ def deleteThisUser(request):
     # TODO 删除头像
     # TODO 删除其它相关信息
     return HttpResponse('1')
+
+

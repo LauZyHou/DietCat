@@ -54,7 +54,7 @@ mongorestore.exe -h 127.0.0.1:27017 -d dietcat E:\WorkSpace\PyCharm\DietCat\test
 <br>
 【6】ML部分需要添加依赖:pandas,numpy,sklearn
 <br>
-【7】Django版本需要2.1,可使用conda更新:
+【7】Django版本需要2.1,可使用cogitnda更新:
 <br>
 conda update -n 环境名(默认base) django
 <br>

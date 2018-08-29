@@ -40,4 +40,5 @@ urlpatterns = [
     path('uploadhead/', mainapp_ajax.uploadHead),
     path('gotomeal/<str:id>', mainapp_views.addEval),
     path('updatebdymsg/', mainapp_views.updateBodyMsg),
+    path('punchdata/<str:way>', mainapp_views.subData),
 ]

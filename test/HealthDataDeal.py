@@ -10,7 +10,6 @@ import numpy as np
 from sklearn.cross_validation import cross_val_score, ShuffleSplit
 from sklearn.ensemble import RandomForestRegressor
 
-
 def TimeSum(a):
     return float(int(a) * 60 + (a - int(a)) * 100)
 

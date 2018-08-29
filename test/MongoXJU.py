@@ -38,13 +38,7 @@ girl = girl[['总分', 'BMI', '肺活量', '立定跳远', '坐位体前屈',
 for girls in np.array(girl):
     post_data = {
         '总分': girls[0],
-        'BMI': girls[1],
-        '肺活量': girls[2],
-        '立定跳远': girls[3],
-        '坐位体前屈': girls[4],
-        '仰卧起坐/引体向上': girls[5],
-        '50米跑': girls[6],
-        '长跑时间': girls[7],
+        '数据': [girls[1],girls[2],girls[3], girls[4],girls[5],girls[6], girls[7]],
         '姓名': girls[8],
         '性别': '女'
     }
@@ -54,13 +48,7 @@ for girls in np.array(girl):
 for girls in np.array(boy):
     post_data = {
         '总分': girls[0],
-        'BMI': girls[1],
-        '肺活量': girls[2],
-        '立定跳远': girls[3],
-        '坐位体前屈': girls[4],
-        '仰卧起坐/引体向上': girls[5],
-        '50米跑': girls[6],
-        '长跑时间': girls[7],
+        '数据': [girls[1],girls[2],girls[3], girls[4],girls[5],girls[6], girls[7]],
         '姓名': girls[8],
         '性别': '男'
     }
