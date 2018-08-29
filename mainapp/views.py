@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from bson.objectid import ObjectId
-
 # 下载文件要用
 from django.http import FileResponse, HttpResponseRedirect
 from mainapp import dao as mainapp_dao
@@ -48,7 +47,7 @@ def getIndexPage(request):
     mylst = [1 for i in range(12)]  # 方便开发用
     # 看看Session里有没有,有就直接进不做校验
     if request.session.get('_id') is not None and request.session.get('username') is not None:
-        favourFood = mainapp_dao.favouriateFood(request.session.get('username'))
+        favourFood = mainapp_dao.favouriateFood(request.session.get('_id'))
         hotFood = mainapp_dao.hotFood()
         return render(request, r'web/index.html', {'favourllst': favourFood,
                                                    'hotlist': hotFood})
@@ -105,44 +104,13 @@ def getBdyMsg(request):
 def getPunchPage(request):
     # 获取服务器时间
     serverDate = datetime.datetime.now().strftime('%Y-%m-%d')
-    print(request.session)
-    '''
-    mylst = [1 for i in range(12)]  # 方便开发用
-    print("从Session里检查")
-    if request.session.get('_id') is not None and request.session.get('username') is not None:
-        print("Session校验成功")
-        return render(request, r'web/index.html', {'mylst': mylst})
-    # 如果是登录操作
-    elif request.method == 'POST':
-        # 获取用户名和密码
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-        # 检查字段缺失
-        if username is None or password is None or \
-                username == "" or password == "":
-            return render(request, r'web/login.html', {'stat': -1})
-        # FIXME 使用用户名和密码校验身份,并从DB中获取该用户id
-        user = mainapp_dao.firstDocInUser({"username": username, "password": password})
-        if user is None:
-            # 登录失败
-            return render(request, r'web/login.html', {'stat': -4})
-        # 登录成功,将登录身份存进session里
-        request.session['_id'] = user.get('_id').__str__()  # 转成str
-        request.session['username'] = user.get('username')
-        print("存进了Session里")
-        return render(request, r'web/index.html', {'mylst': mylst})
-    else:
-        # 请先登录!
-        return render(request, r'web/login.html', {'stat': -5})
-    '''
-
     return render(request, r'web/punch.html', {'serverDate': serverDate})
 
 
 # 用户要进入一日三餐建议页面
 def getMealsPage(request):
-    username = request.session.get('username')
-    recommend = RMD.Single_Recommand(username, 30)
+    userId = request.session.get('_id')
+    recommend = RMD.Single_Recommand(userId, 30)
     breakfast, RecommendList, sneak = mainapp_dao.OneDayRecommend(recommend)
     lunch = RecommendList[0]
     dinner = RecommendList[1]
@@ -165,9 +133,8 @@ def getPropPage(request):
 
 # 用户要进入食物推荐页面
 def getRecommendPage(request, page='1'):
-    username = request.session.get('username')
-    print(username)
-    recommend = RMD.Single_Recommand(username, 70)
+    userId = request.session.get('_id')
+    recommend = RMD.Single_Recommand(userId, 70)
     if len(set(recommend)) < 70:
         recommend = recommend[0:len(set(recommend))]
         recommend.extend(mainapp_dao.FoodNotEnough(70 - len(set(recommend))))
@@ -181,6 +148,8 @@ def getRecommendPage(request, page='1'):
 
 # 用户要进入饮食计划页面
 def getPlanPage(request):
+
+
     return render(request, r'web/plan.html')
 
 
@@ -202,7 +171,51 @@ def getEateryById(request, id):
 # 通过跳转界面添加用户评价
 def addEval(request, id):
     print("获得了餐馆的id", id)
-    username = request.session.get('username')
-    RMD.AddEval(username, mainapp_dao.ID2ShopName(id))
-    RMD.AfferADD(username, mainapp_dao.ID2ShopName(id))
+    userId = request.session.get('_id')
+    RMD.AddEval(userId, mainapp_dao.ID2ShopName(id))
+    RMD.AfferADD(userId, mainapp_dao.ID2ShopName(id))
     return HttpResponseRedirect(mainapp_dao.ID2Pic(id))
+
+
+# FIXME 提交某个用户打卡记录：
+def subData(request, way):
+    serverDate = datetime.datetime.now().strftime('%Y-%m-%d')
+    if request.method == 'POST':
+        # 从Session中获取用户id
+        date = request.POST.get('date')
+        userId = request.session.get('_id')
+        if way == 'spoleep':
+            sleep = request.POST.get('sleeptime')
+            sport = request.POST.get('sporttime')
+            if mainapp_dao.IFdateinData({'用户': userId, '时间': date}) is None:
+                mainapp_dao.inputuserdata(userId, date, sleeptime=sleep, sporttime=sport)
+            else:
+                mainapp_dao.updateuserdata({'用户': userId, '时间': date},
+                                           {'$set': {'睡眠时长': sleep, '运动时长': sport}})
+        elif way == 'walk':
+            walkstep = request.POST.get('todaystep')
+            if mainapp_dao.IFdateinData({'用户': userId, '时间': date}) is None:
+                mainapp_dao.inputuserdata(userId, date, walk=walkstep)
+            else:
+                mainapp_dao.updateuserdata({'用户': userId, '时间': date},
+                                           {'$set': {'步行距离': walkstep}})
+        elif way == 'job':
+            num2job = {'1': '有氧运动', '2': '无氧运动', '3': '应酬', '4': '暴饮暴食', '5': '吸烟', }
+            num = request.POST.getlist('job')
+            job = []
+            for item in num:
+                job.append(num2job[item])
+            print(job)
+            if mainapp_dao.IFdateinData({'用户': userId, '时间': serverDate}) is None:
+                mainapp_dao.inputuserdata(userId, serverDate, joblist=job)
+            else:
+                mainapp_dao.updateuserdata({'用户': userId, '时间': serverDate},
+                                           {'$set': {'工作': job}})
+        elif way == 'food':
+            food = [request.POST.get('breakfast'), request.POST.get('lunch'), request.POST.get('dinner')]
+            if mainapp_dao.IFdateinData({'用户': userId, '时间': serverDate}) is None:
+                mainapp_dao.inputuserdata(userId, serverDate, foodlist=food)
+            else:
+                mainapp_dao.updateuserdata({'用户': userId, '时间': serverDate},
+                                           {'$set': {'食物': food}})
+    return render(request, r'web/punch.html', {'serverDate': serverDate})

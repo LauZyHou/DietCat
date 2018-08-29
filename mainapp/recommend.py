@@ -8,7 +8,9 @@ import math
 import numpy as np
 import pymongo
 from pymongo import MongoClient
-
+client = MongoClient('localhost', 27017)
+db = client['dietcat']
+posts = db.FoodEval
 
 def get_info():
     client = MongoClient()
@@ -128,10 +130,6 @@ class FoodRMD:
         return [self.foods[i] for i in TOPK_Index(p[UserID], K)]
 
     def AddEval(self, User, Food, score=1):
-        client = MongoClient()
-        client = MongoClient('localhost', 27017)
-        db = client['dietcat']
-        posts = db.FoodEval
         if (posts.find_one({'用户': User, '菜品': Food})) is None:
             post_data = {'用户': User, '菜品': Food, '评分': score}
             result = posts.insert_one(post_data)
