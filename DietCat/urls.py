@@ -29,7 +29,7 @@ urlpatterns = [
     path('meals/', mainapp_views.getMealsPage),
     path('setting/', mainapp_views.getSettingPage),
     path('prop/', mainapp_views.getPropPage),
-    path('recommend/', mainapp_views.getRecommendPage),
+    path('recommend/<str:page>', mainapp_views.getRecommendPage),
     path('plan/', mainapp_views.getPlanPage),
     path('testdown/', mainapp_views.testDown),
     path('eatery/<str:id>', mainapp_views.getEateryById),
@@ -38,4 +38,5 @@ urlpatterns = [
     path('subscore/', mainapp_ajax.subScore),
     path('updatemsg/', mainapp_ajax.updateMsg),
     path('uploadhead/', mainapp_ajax.uploadHead),
+    path('gotomeal/<str:id>', mainapp_views.addEval),
 ]
