@@ -242,6 +242,7 @@ def subData(request, way):
             else:
                 mainapp_dao.updateuserdata({'用户': userId, '时间': date},
                                            {'$set': {'睡眠时长': sleep, '运动时长': sport}})
+            return render(request, r'web/punch.html', {'serverDate': serverDate,'spoleep':mainapp_dao.sh})
         elif way == 'walk':
             walkstep = request.POST.get('todaystep')
             if mainapp_dao.IFdateinData({'用户': userId, '时间': date}) is None:
