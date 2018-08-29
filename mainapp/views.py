@@ -100,7 +100,13 @@ def getCntMsg(request):
 
 # 用户要进入身体信息页面
 def getBdyMsg(request):
-    return render(request, r'web/bdymsg.html')
+    # 通过检查Session检验是否登录了
+    userId = request.session.get('_id')
+    if userId is None:
+        return render(request, r'web/login.html', {'stat': -5})
+    # 获取用户(字典形式)
+    user = mainapp_dao.firstDocInUser({"_id": ObjectId(userId)})
+    return render(request, r'web/bdymsg.html', {'user': user})
 
 
 # 用户要进入昨日打卡页面
@@ -178,3 +184,47 @@ def addEval(request, id):
     RMD.AddEval(username, mainapp_dao.ID2ShopName(id))
     RMD.AfferADD(username, mainapp_dao.ID2ShopName(id))
     return HttpResponseRedirect(mainapp_dao.ID2Pic(id))
+
+
+# 更新身体信息
+def updateBodyMsg(request):
+    # 检查提交方式
+    if request.method != 'POST':
+        return render(request, r'web/bdymsg.html')
+    # 检查Session
+    userId = request.session.get('_id')
+    if userId is None:
+        return render(request, r'web/login.html')
+    # 获取表单提交的内容
+    sex = request.POST.get('sex')
+    birthday = request.POST.get('birthday')
+    height = request.POST.get('height')
+    weight = request.POST.get('weight')
+    bloodType = request.POST.get('blood-type')
+    lungCapacity = request.POST.get('lung-capacity')
+    run50 = request.POST.get('run-50')
+    visionLeft = request.POST.get('vision-left')
+    visionRight = request.POST.get('vision-right')
+    sitAndReach = request.POST.get('sit-and-reach')
+    standingLongJump = request.POST.get('standing-long-jump')
+    ropeSkipping1 = request.POST.get('rope-skipping-1')
+    sitUps1 = request.POST.get('sit-ups-1')
+    eatingPrefer = request.POST.get('eating-prefer')
+    eatingStyle = request.POST.get('eating-style')
+    sleepTimeAvg = request.POST.get('sleep-time-avg')
+    anamnesis = request.POST.get('anamnesis')
+    # 测试输出
+    print('*' * 20)
+    print(sex, birthday, height, weight, bloodType, lungCapacity, run50, visionLeft, visionRight, sitAndReach,
+          standingLongJump, ropeSkipping1, sitUps1, eatingPrefer, eatingStyle, sleepTimeAvg, anamnesis)
+    print('*' * 20)
+    # 更新至数据库
+    mainapp_dao.updateOneUser({'_id': ObjectId(userId)},
+                              {'$set': {'sex': sex, 'birthday': birthday, 'height': height, 'weight': weight,
+                                        'blood_type': bloodType, 'lung_capacity': lungCapacity, 'run_50': run50,
+                                        'vision_left': visionLeft, 'vision_right': visionRight,
+                                        'sit_and_reach': sitAndReach, 'standing_long_jump': standingLongJump,
+                                        'rope_skipping_1': ropeSkipping1, 'sit_ups_1': sitUps1,
+                                        'eating_prefer': eatingPrefer, 'eating_style': eatingStyle,
+                                        'sleep_time_avg': sleepTimeAvg, 'anamnesis': anamnesis}})
+    return getBdyMsg(request)  # 直接调用本页面的函数

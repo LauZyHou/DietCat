@@ -1,0 +1,24 @@
+===================用户(user)===================
+----主键 _id
+----账户名 username
+----密码 password
+----性别 sex
+----出生日期 birthday
+----身高 height
+----体重 weight
+----血型 blood_type
+----肺活量 lung_capacity
+----50米短跑 run_50
+----视力(左) vision_left
+----视力(右) vision_right
+----坐位体前屈 sit_and_reach
+----立定跳远 standing_long_jump
+----1分钟跳绳 rope_skipping_1
+----1分钟仰卧起坐 sit_ups_1
+----饮食偏好 eating_prefer
+----饮食风格 eating_style
+----均日睡眠时间 sleep_time_avg
+----既往病史 anamnesis
+================================================
+
+

@@ -19,7 +19,7 @@
             <h2>DietCat用户身体信息表</h2>
             <p>欢迎，填写必要的身体信息能让我们更好地为您提供科学的饮食服务。</p>
         </div>
-        <form>
+        <form action="/updatebdymsg/" method="post">
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -32,29 +32,29 @@
                     <td>性别</td>
                     <td>
                         <label class="radio-inline">
-                            <input type="radio" data-toggle="radio" name="sex">男
+                            <input type="radio" data-toggle="radio" name="sex" value="1">男
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" data-toggle="radio" name="sex">女
+                            <input type="radio" data-toggle="radio" name="sex" value="0">女
                         </label>
                     </td>
                 </tr>
                 <tr>
                     <td>出生日期</td>
                     <td>
-                        <input type="date" value="">
+                        <input type="date" value="{{ user.birthday }}" name="birthday">
                     </td>
                 </tr>
                 <tr>
                     <td>身高</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.height }}" name="height">
                     </td>
                 </tr>
                 <tr>
                     <td>体重</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.weight }}" name="weight">
                     </td>
                 </tr>
                 <tr>
@@ -64,67 +64,67 @@
                 <tr>
                     <td>血型</td>
                     <td>
-                        <select class="form-control" id="sel1">
-                            <option>A</option>
-                            <option>B</option>
-                            <option>AB</option>
-                            <option>O</option>
-                            <option>其它</option>
+                        <select class="form-control" id="sel1" name="blood-type">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="AB">AB</option>
+                            <option value="O">O</option>
+                            <option value="others">其它</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <td>肺活量</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.lung_capacity }}" name="lung-capacity">
                     </td>
                 </tr>
                 <tr>
                     <td>50米短跑</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.run_50 }}" name="run-50">
                     </td>
                 </tr>
                 <tr>
                     <td>视力(左)</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.vision_left }}" name="vision-left">
                     </td>
                 </tr>
                 <tr>
                     <td>视力(右)</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.vision_right }}" name="vision-right">
                     </td>
                 </tr>
                 <tr>
                     <td>坐位体前屈</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.sit_and_reach }}" name="sit-and-reach">
                     </td>
                 </tr>
                 <tr>
                     <td>立定跳远</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.standing_long_jump }}" name="standing-long-jump">
                     </td>
                 </tr>
                 <tr>
                     <td>1分钟跳绳</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.rope_skipping_1 }}" name="rope-skipping-1">
                     </td>
                 </tr>
                 <tr>
                     <td>1分钟仰卧起坐</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.sit_ups_1 }}" name="sit-ups-1">
                     </td>
                 </tr>
                 <tr>
                     <td>饮食偏好</td>
                     <td>
-                        <select class="form-control" id="sel2">
+                        <select class="form-control" id="sel2" name="eating-prefer">
                             <option>清淡</option>
                             <option>辛辣</option>
                             <option>咸</option>
@@ -135,7 +135,7 @@
                 <tr>
                     <td>饮食风格</td>
                     <td>
-                        <select class="form-control" id="sel3">
+                        <select class="form-control" id="sel3" name="eating-style">
                             <option>长期应酬</option>
                             <option>规律三餐</option>
                             <option>一日两餐</option>
@@ -146,20 +146,23 @@
                 <tr>
                     <td>均日睡眠时间</td>
                     <td>
-                        <input type="text">
+                        <input type="text" value="{{ user.sleep_time_avg }}" name="sleep-time-avg">
                     </td>
                 </tr>
                 <tr>
                     <td>既往病史(按住Ctrl多选)</td>
                     <td>
-                        <select multiple class="form-control" id="sel4">
-                            {#这个还不全面#}
-                            <option>高血压</option>
-                            <option>鼻炎</option>
-                            <option>咽炎</option>
-                            <option>关节炎</option>
-                            <option>骨质疏松</option>
+                        <select multiple id="sel4" onchange="changeAna();">
+                            <optgroup label="既往病史">
+                                {#这个还不全面#}
+                                <option value="1">高血压</option>
+                                <option value="2">鼻炎</option>
+                                <option value="3">咽炎</option>
+                                <option value="4">关节炎</option>
+                                <option value="5">骨质疏松</option>
+                            </optgroup>
                         </select>
+                        <input type="hidden" name="anamnesis" id="hid-sel4" value="{{ user.anamnesis }}">
                     </td>
                 </tr>
                 </tbody>
@@ -171,6 +174,20 @@
         </div>
     </div>
     <script>
+        {#监视选中项的改变,每次都重新维护全部选中项#}
 
+        function changeAna() {
+            var ana = [];
+            var obj = document.getElementById("sel4");
+            for (var i = 0; i < obj.options.length; i++) {
+                if (obj.options[i].selected) {
+                    ana.push(obj.options[i].value);// 收集选中项
+                }
+            }
+            var hid_sel4 = document.getElementById("hid-sel4");
+            console.log(hid_sel4);
+            //放入隐藏域中,后续由隐藏域提交
+            hid_sel4.value = ana;
+        }
     </script>
 {% endblock %}
