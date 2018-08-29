@@ -57,7 +57,11 @@
                 </li>
             {% endfor %}
             <li class="next">
-                <a href="/recommend/{{ page|add:1 }}">Next</a>
+                {% if page == 5 %}
+                    <a href="/recommend/5">Next</a>
+                {% else %}
+                    <a href="/recommend/{{ page|add:1 }}">Next</a>
+                {% endif %}
             </li>
         </ul>
     </div>

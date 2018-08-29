@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import pymongo
 from bson.objectid import ObjectId
+import random
 import re
 
 # 连接到MongoDB
@@ -41,3 +42,51 @@ def ID2Pic(id):
 def ID2ShopName(id):
     return db_dietcat.ShopFood.find_one({'_id': ObjectId(id)})['商铺名称'] + "-" + \
            db_dietcat.ShopFood.find_one({'_id': ObjectId(id)})['菜品']
+
+
+def OneDayRecommend(list):
+    RMDLIST = []
+    Flag_breakfast = 0
+    for i in list:
+        RMDfood = db_dietcat.ShopFood.find_one({'商铺名称': i.split("-")[0], '菜品': i.split("-")[1]})
+        RMDfood['id'] = RMDfood.get('_id').__str__()
+        if RMDfood.get('早市'):
+            if Flag_breakfast == 0:
+                breakfast = RMDfood
+                sneak = RMDfood
+            else:
+                sneak = RMDfood
+        else:
+            RMDLIST.append(RMDfood)
+    return breakfast, RMDLIST[0:2], sneak
+
+
+def favouriateFood(username):
+    favourityfood = []
+    UserEval = db_dietcat.FoodEval.find({'用户': username})
+    for usereval in UserEval:
+        if usereval['评分'] > 3:
+            favourityfood.append(usereval)
+    foodrandom = random.sample(favourityfood, 12)
+    Food = []
+    for item in foodrandom:
+        food = db_dietcat.ShopFood.find_one({'商铺名称': item['菜品'].split("-")[0], '菜品': item['菜品'].split("-")[1]})
+        food['id'] = food.get('_id').__str__()
+        Food.append(food)
+    return Food
+
+
+def hotFood():
+    hotfood = []
+    scotts_posts = db_dietcat.ShopFood.find({}, {"_id": 0})
+    for i in scotts_posts:
+        if i['推荐人数']>50:
+            i['id'] = i.get('_id').__str__()
+            hotfood.append(i)
+    return random.sample(hotfood, 12)
+
+def FoodNotEnough(num=70):
+    food=db_dietcat.FoodEval.aggregate([{"$sample": {"size": num}}])
+    return [item['菜品'] for item in food]
+
+

@@ -22,13 +22,15 @@
             <h4>早餐</h4>
             <div class="mealdiv_A">
                 <div class="picdiv">
-                    <a href="#" target="_blank">
-                        <img src="{% static "/lzh/imgs/yuan.jpeg" %}">
+                    <a href="/gotomeal/{{ breakfast.id }}" target="_blank">
+                        <img src={{ breakfast.菜品图标网址 }}>
                     </a>
                 </div>
                 <div class="txtdiv">
                     <div class="ttlbox">
-                        <h4 id="brkfst">掌上韩品（大华朗香园店）-韩式炸鸡</h4>
+                        <a href="/gotomeal/{{ breakfast.id }}" target="_blank">
+                            <h4 id="brkfst">{{ breakfast.商铺名称 }}-{{ breakfast.菜品 }}</h4>
+                        </a>
                     </div>
                     <br>
                     <div class="a-row">
@@ -46,22 +48,24 @@
             <h4>午餐</h4>
             <div class="mealdiv_B">
                 <div class="picdiv">
-                    <a href="#" target="_blank">
-                        <img src="{% static "/lzh/imgs/yuan.jpeg" %}">
+                    <a href="/gotomeal/{{ lunch.id }}" target="_blank">
+                        <img src={{ lunch.菜品图标网址 }}>
                     </a>
                 </div>
                 <div class="txtdiv">
                     <div class="ttlbox">
-                        <h4 id="lnch">掌上韩品（大华朗香园店）-韩式炸鸡</h4>
+                        <a href="/gotomeal/{{ lunch.id }}" target="_blank">
+                            <h4 id="brkfst">{{ lunch.商铺名称 }}-{{ lunch.菜品 }}</h4>
+                        </a>
                     </div>
                     <br>
                     <div class="a-row">
                         评分：
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('lnch',1);">1</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('lnch',2);">2</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('lnch',3);">3</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('lnch',4);">4</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('lnch',5);">5</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',1);">1</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',2);">2</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',3);">3</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',4);">4</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',5);">5</button>
                     </div>
                 </div>
             </div>
@@ -69,23 +73,25 @@
             <hr>
             <h4>晚餐</h4>
             <div class="mealdiv_A">
-                <div class="picdiv">
-                    <a href="#" target="_blank">
-                        <img src="{% static "/lzh/imgs/yuan.jpeg" %}">
+                <<div class="picdiv">
+                    <a href="/gotomeal/{{ dinner.id }}" target="_blank">
+                        <img src={{ dinner.菜品图标网址 }}>
                     </a>
                 </div>
                 <div class="txtdiv">
                     <div class="ttlbox">
-                        <h4 id="dnr">掌上韩品（大华朗香园店）-韩式炸鸡</h4>
+                        <a href="/gotomeal/{{ dinner.id }}" target="_blank">
+                            <h4 id="brkfst">{{ dinner.商铺名称 }}-{{ dinner.菜品 }}</h4>
+                        </a>
                     </div>
                     <br>
                     <div class="a-row">
                         评分：
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('dnr',1);">1</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('dnr',2);">2</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('dnr',3);">3</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('dnr',4);">4</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('dnr',5);">5</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',1);">1</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',2);">2</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',3);">3</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',4);">4</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',5);">5</button>
                     </div>
                 </div>
             </div>
@@ -94,22 +100,24 @@
             <h4>小食</h4>
             <div class="mealdiv_B">
                 <div class="picdiv">
-                    <a href="#" target="_blank">
-                        <img src="{% static "/lzh/imgs/yuan.jpeg" %}">
+                    <a href="/gotomeal/{{ sneak.id }}" target="_blank">
+                        <img src={{ sneak.菜品图标网址 }}>
                     </a>
                 </div>
                 <div class="txtdiv">
                     <div class="ttlbox">
-                        <h4 id="snks">掌上韩品（大华朗香园店）-韩式炸鸡</h4>
+                        <a href="/gotomeal/{{ sneak.id }}" target="_blank">
+                            <h4 id="brkfst">{{ sneak.商铺名称 }}-{{ sneak.菜品 }}</h4>
+                        </a>
                     </div>
                     <br>
                     <div class="a-row">
                         评分：
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('snks',1);">1</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('snks',2);">2</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('snks',3);">3</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('snks',4);">4</button>
-                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('snks',5);">5</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',1);">1</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',2);">2</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',3);">3</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',4);">4</button>
+                        <button class="btn btn-embossed btn-sm btn-primary" onclick="subScore('brkfst',5);">5</button>
                     </div>
                 </div>
             </div>

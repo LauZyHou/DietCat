@@ -6,6 +6,7 @@ from django.http import FileResponse, HttpResponseRedirect
 from mainapp import dao as mainapp_dao
 from mainapp import recommend as mainapp_RMD
 import datetime
+import random
 
 print('view')
 global RMD
@@ -48,7 +49,10 @@ def getIndexPage(request):
     print("从Session里检查")
     if request.session.get('_id') is not None and request.session.get('username') is not None:
         print("Session校验成功")
-        return render(request, r'web/index.html', {'mylst': mylst})
+        favourFood = mainapp_dao.favouriateFood(request.session.get('username'))
+        hotFood = mainapp_dao.hotFood()
+        return render(request, r'web/index.html', {'favourllst': favourFood,
+                                                   'hotlist': hotFood})
     # 如果是登录操作
     elif request.method == 'POST':
         # 获取用户名和密码
@@ -129,7 +133,16 @@ def getPunchPage(request):
 
 # 用户要进入一日三餐建议页面
 def getMealsPage(request):
-    return render(request, r'web/meals.html')
+    username = request.session.get('username')
+    recommend = RMD.Single_Recommand(username, 30)
+    breakfast, RecommendList, sneak = mainapp_dao.OneDayRecommend(recommend)
+    lunch = RecommendList[0]
+    dinner = RecommendList[1]
+    return render(request, r'web/meals.html',
+                  {'breakfast': breakfast,
+                   'lunch': lunch,
+                   'dinner': dinner,
+                   'sneak': sneak})
 
 
 # 用户要进入设置页面
@@ -147,8 +160,11 @@ def getRecommendPage(request, page='1'):
     username = request.session.get('username')
     print(username)
     recommend = RMD.Single_Recommand(username, 70)
+    if len(set(recommend))<70:
+        recommend=recommend[0:len(set(recommend))]
+        recommend.extend(mainapp_dao.FoodNotEnough(70-len(set(recommend))))
     #    print(recommend)
-    RecommendList = mainapp_dao.RecommendList(recommend)[12 * (int(page) - 1):12 * (int(page))]
+    RecommendList = random.sample(mainapp_dao.RecommendList(recommend)[12 * (int(page) - 1):12 * (int(page))],12)
     return render(request, r'web/recommend.html',
                   {'mylst': RecommendList,
                    'pglst': [i + 1 for i in range(5)],

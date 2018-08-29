@@ -5,7 +5,7 @@ client = MongoClient()
 client = MongoClient('localhost', 27017)
 db = client['dietcat']
 posts = db.posts
-
+'''
 post_1 = {
     'title': 'Python and MongoDB',
     'content': 'PyMongo is fun, you guys',
@@ -31,3 +31,6 @@ if scotts_posts is None:
 
 i = '掌上韩品（大华朗香园店）-韩式牛肉铁锅拌饭'
 print(i.split("-")[1])
+'''
+for i in posts.aggregate([{"$sample": {"size": 1}}]):
+    print(i)
