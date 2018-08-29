@@ -1,9 +1,13 @@
 # DietCat饮食专家
-DietCat饮食推荐网站，Django工程，2018夏季课程项目。 
+DietCat饮食推荐网站，Django工程，2018夏季课程项目。
+## 小组成员
+刘知昊，杜泽仁，郑海燕，段丽丽，顾河建。
 ## 主要界面展示
-![](https://i.imgur.com/d1nJjUE.jpg)
+![](https://i.imgur.com/l9Hb1k5.jpg)
 
-![](https://i.imgur.com/6Xwsqj9.jpg)
+![](https://i.imgur.com/UP6Invh.jpg)
+
+![](https://i.imgur.com/sRmOaFz.jpg)
 
 ![](https://i.imgur.com/QgHLlkT.jpg)
 
@@ -15,9 +19,9 @@ DietCat饮食推荐网站，Django工程，2018夏季课程项目。
 
 ![](https://i.imgur.com/nLwWrDq.jpg)
 
-![](https://i.imgur.com/QI88vAs.jpg)
+![](https://i.imgur.com/RIjt30f.jpg)
 
-![](https://i.imgur.com/VeBkQO1.jpg)
+![](https://i.imgur.com/AzuWHxQ.jpg)
 
 ![](https://i.imgur.com/0YZb4Gh.jpg)
 ## 开发与合作日志
@@ -47,6 +51,14 @@ mongodump.exe -h 127.0.0.1:27017 -d dietcat -o E:\WorkSpace\PyCharm\DietCat\test
 【5】从备份的数据恢复：
 <br>
 mongorestore.exe -h 127.0.0.1:27017 -d dietcat E:\WorkSpace\PyCharm\DietCat\test\dietcat
+<br>
+【6】ML部分需要添加依赖:pandas,numpy,sklearn
+<br>
+【7】Django版本需要2.1,可使用conda更新:
+<br>
+conda update -n 环境名(默认base) django
+<br>
+【8】为生成到本地数据库,单独运行test目录下形如Mongo*.py的文件。
 #### 特别注意
 在mainapp下的views.py中可以看到用户的各种操作，为了该文件的简洁，请在外面写后端操作的模块，封装成函数并在这里调用。
 ### 2018年7月2日
@@ -64,4 +76,4 @@ mongorestore.exe -h 127.0.0.1:27017 -d dietcat E:\WorkSpace\PyCharm\DietCat\test
 ### 2018年8月22日
 完成注册/登入/登出，添加DAO层，添加MongoDB数据库文件在test目录的子目录下。当数据库结构或内容发生重要改变时需要备份到此。
 ### 2018年8月29日
-python 包依赖：pandas,numpy,sklearn
+修复了主页不能显示菜品的bug，修复了菜品不能整齐排列的bug。

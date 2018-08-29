@@ -9,7 +9,7 @@ from mainapp import recommend as mainapp_RMD
 import datetime
 import random
 
-print('view')
+print('===view===')
 global RMD
 RMD = mainapp_RMD.FoodRMD()
 
@@ -46,11 +46,11 @@ def getLoginPage(request):
 # 用户要去主页(可能是登录操作,也可能就是单纯的页面切换操作)
 def getIndexPage(request):
     mylst = [1 for i in range(12)]  # 方便开发用
+    hotFood = mainapp_dao.hotFood()  # 无论如何都要有热门食物
     # 看看Session里有没有,有就直接进不做校验
     if request.session.get('_id') is not None and request.session.get('username') is not None:
         favourFood = mainapp_dao.favouriateFood(request.session.get('username'))
-        hotFood = mainapp_dao.hotFood()
-        return render(request, r'web/index.html', {'favourllst': favourFood,
+        return render(request, r'web/index.html', {'favourlist': favourFood,
                                                    'hotlist': hotFood})
     # 如果是登录操作
     elif request.method == 'POST':
@@ -63,6 +63,7 @@ def getIndexPage(request):
             return render(request, r'web/login.html', {'stat': -1})
         # FIXME 使用用户名和密码校验身份,并从DB中获取该用户id
         user = mainapp_dao.firstDocInUser({"username": username, "password": password})
+        favourFood = mainapp_dao.favouriateFood(username)  # 根据用户名查询最喜爱的食物
         if user is None:
             # 登录失败
             return render(request, r'web/login.html', {'stat': -4})
@@ -70,11 +71,12 @@ def getIndexPage(request):
         request.session['_id'] = user.get('_id').__str__()  # 转成str
         request.session['username'] = user.get('username')
         print("存进了Session里")
-        return render(request, r'web/index.html', {'mylst': mylst})
+        return render(request, r'web/index.html', {'favourlist': favourFood,
+                                                   'hotlist': hotFood})
     else:
-        # 更新:不登录也可以去index页
-        # return render(request, r'web/login.html', {'stat': -5})
-        return render(request, r'web/index.html', {'mylst': mylst})
+        # 更新:不登录也可以去index页,不登陆不能获取最喜爱的食物
+        return render(request, r'web/index.html', {'favourlist': None,
+                                                   'hotlist': hotFood})
 
 
 # 用户要注销登录
@@ -106,36 +108,6 @@ def getPunchPage(request):
     # 获取服务器时间
     serverDate = datetime.datetime.now().strftime('%Y-%m-%d')
     print(request.session)
-    '''
-    mylst = [1 for i in range(12)]  # 方便开发用
-    print("从Session里检查")
-    if request.session.get('_id') is not None and request.session.get('username') is not None:
-        print("Session校验成功")
-        return render(request, r'web/index.html', {'mylst': mylst})
-    # 如果是登录操作
-    elif request.method == 'POST':
-        # 获取用户名和密码
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-        # 检查字段缺失
-        if username is None or password is None or \
-                username == "" or password == "":
-            return render(request, r'web/login.html', {'stat': -1})
-        # FIXME 使用用户名和密码校验身份,并从DB中获取该用户id
-        user = mainapp_dao.firstDocInUser({"username": username, "password": password})
-        if user is None:
-            # 登录失败
-            return render(request, r'web/login.html', {'stat': -4})
-        # 登录成功,将登录身份存进session里
-        request.session['_id'] = user.get('_id').__str__()  # 转成str
-        request.session['username'] = user.get('username')
-        print("存进了Session里")
-        return render(request, r'web/index.html', {'mylst': mylst})
-    else:
-        # 请先登录!
-        return render(request, r'web/login.html', {'stat': -5})
-    '''
-
     return render(request, r'web/punch.html', {'serverDate': serverDate})
 
 

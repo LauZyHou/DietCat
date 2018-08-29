@@ -9,7 +9,7 @@ from mainapp import recommend as mainapp_RMD
 # 下载文件要用
 from django.http import FileResponse
 
-print('ajax')
+print('===ajax===')
 global RMD
 RMD = mainapp_RMD.FoodRMD()
 

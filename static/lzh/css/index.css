@@ -31,18 +31,28 @@
 
 /*楼阁容器*/
 .building {
-    background-color: #79bbe7;
+    /*background-color: #79bbe7;*/
+    overflow: hidden;
+}
+
+/*一行n盒容器*/
+.rowhelp {
+    width: 100%;
+    height: auto;
+    /*background-color: #8e44ad;*/
+    overflow: hidden;
 }
 
 /*每个窗格*/
-.building > .eat-item {
+.eat-item {
     float: left;
     width: 265px;
     margin: 20px 22px 11px 23px;
+    display: inline-block;
 }
 
 /*窗格里的图片盒子*/
-.building > .eat-item > .img_a_div {
+.eat-item > .img_a_div {
     position: relative;
     transition: all 1s;
     overflow: hidden;
@@ -50,14 +60,14 @@
 }
 
 /*图片的链接*/
-.building > .eat-item > .img_a_div > a {
+.eat-item > .img_a_div > a {
     display: inline-block;
     word-spacing: 0;
     text-decoration: none;
 }
 
 /*图片img*/
-.building > .eat-item > .img_a_div > a > img {
+.eat-item > .img_a_div > a > img {
     width: 100%;
     height: 100%;
     max-width: 100%;
