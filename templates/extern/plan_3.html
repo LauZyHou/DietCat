@@ -10,7 +10,7 @@
     option = {
         tooltip: {},
         legend: {
-            data: ['您的情况', '平均情况']
+            data: ['您的情况', '标准情况']
         },
         radar: {
             // shape: 'circle',
@@ -23,31 +23,31 @@
                 }
             },
             indicator: [
-                {name: '仰卧起坐', max: 6500},
-                {name: '视力(左)', max: 16000},
-                {name: '肺活量', max: 30000},
-                {name: '俯卧撑', max: 38000},
-                {name: '视力(右)', max: 52000},
-                {name: '统计均日睡眠时间', max: 25000}
+                {name: '仰卧起坐', max: 60},
+                {name: '视力(左)', max: 6.0},
+                {name: '肺活量', max: 7000},
+                {name: '俯卧撑', max: 60},
+                {name: '视力(右)', max: 6.0},
+                {name: '统计均日睡眠时间', max: 10}
             ]
         },
         series: [{
-            name: '您 vs 平均',
+            name: '您 vs 标准',
             type: 'radar',
             // areaStyle: {normal: {}},
             data: [
                 {
-                    value: [4300, 10000, 28000, 35000, 50000, 19000],
+                    value: [{{ user.sit_ups_1 }}, {{ user.vision_left }}, {{ user.lung_capacity }}, {{ user.push_ups_1 }}, {{ user.vision_right }}, {{ user.sleep_time_avg }}],
                     name: '您的情况'
                 },
                 {
-                    value: [5000, 14000, 28000, 31000, 42000, 21000],
-                    name: '平均情况'
+                    value: [35, 4.1, 3500, 25, 5.1, 7],
+                    name: '标准情况'
                 }
             ]
         }]
     };
-    ;
+
     if (option && typeof option === "object") {
         myChart3.setOption(option, true);
     }

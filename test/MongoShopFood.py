@@ -3,7 +3,6 @@ from pymongo import MongoClient
 import pandas as pd
 import numpy as np
 
-client = MongoClient()
 client = MongoClient('localhost', 27017)
 db = client['dietcat']
 posts = db.ShopFood

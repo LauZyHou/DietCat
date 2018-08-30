@@ -8,9 +8,11 @@ import math
 import numpy as np
 import pymongo
 from pymongo import MongoClient
+
 client = MongoClient('localhost', 27017)
 db = client['dietcat']
 posts = db.FoodEval
+
 
 def get_info():
     client = MongoClient()
@@ -34,13 +36,13 @@ def get_info():
             for i in range(u):
                 FoodEval[i].append(0)
         FoodEval[users.index(post['用户'])][foods.index(post['菜品'])] = post['评分']
-    #    print('FoodEval:\n',np.array(FoodEval))
+    # print('FoodEval:\n', np.array(FoodEval))
 
     FoodSum = []
     b = np.transpose(FoodEval).tolist()
     for food in b:
         FoodSum.append(len(food) - food.count(0))
-    #    print('FoodSum:',FoodSum)
+    # print('FoodSum:', FoodSum)
 
     FoodEval_bk = np.array(FoodEval).tolist()
     UserFood = []
@@ -51,7 +53,7 @@ def get_info():
                 n.append(i.index(j))
                 i[i.index(j)] = 0
         UserFood.append(n)
-    #    print('UserFood:',UserFood)
+    # print('UserFood:', UserFood)
 
     FoodUser = []
     for i in b:
@@ -61,7 +63,7 @@ def get_info():
                 n.append(i.index(j))
                 i[i.index(j)] = 0
         FoodUser.append(n)
-    #    print('FoodUser:',FoodUser)
+    # print('FoodUser:', FoodUser)
     print('数据库读取完成')
     return users, foods, FoodEval, FoodSum, UserFood, FoodUser
 

@@ -60,14 +60,15 @@ def getIndexPage(request):
         if username is None or password is None or \
                 username == "" or password == "":
             return render(request, r'web/login.html', {'stat': -1})
-        # FIXME 使用用户名和密码校验身份,并从DB中获取该用户id
+        # 使用用户名和密码校验身份,并从DB中获取该用户id
         user = mainapp_dao.firstDocInUser({"username": username, "password": password})
-        favourFood = mainapp_dao.favouriateFood(username)  # 根据用户名查询最喜爱的食物
         if user is None:
             # 登录失败
             return render(request, r'web/login.html', {'stat': -4})
         # 登录成功,将登录身份存进session里
-        request.session['_id'] = user.get('_id').__str__()  # 转成str
+        userId = user.get('_id').__str__()
+        favourFood = mainapp_dao.favouriateFood(userId)
+        request.session['_id'] = userId  # 转成str
         request.session['username'] = user.get('username')
         print("存进了Session里")
         return render(request, r'web/index.html', {'favourlist': favourFood,
@@ -156,7 +157,13 @@ def getRecommendPage(request, page='1'):
 
 # 用户要进入饮食计划页面
 def getPlanPage(request):
-    return render(request, r'web/plan.html')
+    # 检查Session
+    userId = request.session.get('_id')
+    if userId is None:
+        return render(request, r'web/login.html', {'stat': -5})
+    # 获取用户
+    user = mainapp_dao.firstDocInUser({'_id': ObjectId(userId)})
+    return render(request, r'web/plan.html', {'user': user})
 
 
 # 测试下载报表文件
@@ -191,7 +198,7 @@ def updateBodyMsg(request):
     # 检查Session
     userId = request.session.get('_id')
     if userId is None:
-        return render(request, r'web/login.html')
+        return render(request, r'web/login.html', {'stat': -5})
     # 获取表单提交的内容
     sex = request.POST.get('sex')
     birthday = request.POST.get('birthday')
@@ -206,6 +213,7 @@ def updateBodyMsg(request):
     standingLongJump = request.POST.get('standing-long-jump')
     ropeSkipping1 = request.POST.get('rope-skipping-1')
     sitUps1 = request.POST.get('sit-ups-1')
+    pushUps1 = request.POST.get('push-ups-1')
     eatingPrefer = request.POST.get('eating-prefer')
     eatingStyle = request.POST.get('eating-style')
     sleepTimeAvg = request.POST.get('sleep-time-avg')
@@ -213,7 +221,7 @@ def updateBodyMsg(request):
     # 测试输出
     print('*' * 20)
     print(sex, birthday, height, weight, bloodType, lungCapacity, run50, visionLeft, visionRight, sitAndReach,
-          standingLongJump, ropeSkipping1, sitUps1, eatingPrefer, eatingStyle, sleepTimeAvg, anamnesis)
+          standingLongJump, ropeSkipping1, sitUps1, pushUps1, eatingPrefer, eatingStyle, sleepTimeAvg, anamnesis)
     print('*' * 20)
     # 更新至数据库
     mainapp_dao.updateOneUser({'_id': ObjectId(userId)},
@@ -221,7 +229,7 @@ def updateBodyMsg(request):
                                         'blood_type': bloodType, 'lung_capacity': lungCapacity, 'run_50': run50,
                                         'vision_left': visionLeft, 'vision_right': visionRight,
                                         'sit_and_reach': sitAndReach, 'standing_long_jump': standingLongJump,
-                                        'rope_skipping_1': ropeSkipping1, 'sit_ups_1': sitUps1,
+                                        'rope_skipping_1': ropeSkipping1, 'sit_ups_1': sitUps1, 'push_ups_1': pushUps1,
                                         'eating_prefer': eatingPrefer, 'eating_style': eatingStyle,
                                         'sleep_time_avg': sleepTimeAvg, 'anamnesis': anamnesis}})
     return getBdyMsg(request)  # 直接调用本页面的函数
