@@ -13,9 +13,11 @@ DietCat饮食推荐网站，Django工程，2018夏季课程项目。
 
 ![](https://i.imgur.com/5Hcpflf.jpg)
 
-![](https://i.imgur.com/o0SJUD8.jpg)
+![](http://i1.bvimg.com/660180/36adc045170d777f.jpg)
 
-![](https://i.imgur.com/Fht3a0L.jpg)
+![](http://i1.bvimg.com/660180/c5412610130c2a72.jpg)
+
+![](http://i1.bvimg.com/660180/ed71192b0aba6926.jpg)
 
 ![](https://i.imgur.com/nLwWrDq.jpg)
 

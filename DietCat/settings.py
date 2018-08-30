@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mainapp',  # 为了自定义过滤器,首先要有当前app被注册
+    'mainapp.templatetags',  # 自定义过滤器目录也当做app单独注册
 ]
 
 MIDDLEWARE = [

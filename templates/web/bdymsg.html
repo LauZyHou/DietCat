@@ -4,6 +4,8 @@
 {% block own-rely %}
     {#静态资源目录需要重新加载#}
     {% load static %}
+    {#自定义过滤器#}
+    {% load mainapp_filter %}
     {#其它依赖#}
     <link href="{% static "/lzh/css/bdymsg.css" %}" rel="stylesheet">
 {% endblock %}
@@ -32,10 +34,14 @@
                     <td>性别</td>
                     <td>
                         <label class="radio-inline">
-                            <input type="radio" data-toggle="radio" name="sex" value="1">男
+                            <input type="radio" data-toggle="radio" name="sex" value="1"
+                                   {% if user.sex is not None %}{% ifequal user.sex '1' %}checked
+                                   {% endifequal %}{% endif %}>男
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" data-toggle="radio" name="sex" value="0">女
+                            <input type="radio" data-toggle="radio" name="sex" value="0"
+                                   {% if user.sex is not None %}{% ifequal user.sex '0' %}checked
+                                   {% endifequal %}{% endif %}>女
                         </label>
                     </td>
                 </tr>
@@ -59,17 +65,35 @@
                 </tr>
                 <tr>
                     <td>BMI(自动计算)</td>
-                    <td>自动计算</td>
+                    <td>{{ bmi }}</td>
                 </tr>
                 <tr>
                     <td>血型</td>
                     <td>
                         <select class="form-control" id="sel1" name="blood-type">
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="AB">AB</option>
-                            <option value="O">O</option>
-                            <option value="others">其它</option>
+                            {% if user.blood_type is None %}
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="AB">AB</option>
+                                <option value="O">O</option>
+                                <option value="others">其它</option>
+                            {% else %}
+                                <option value="A"
+                                        {% ifequal user.blood_type 'A' %}selected{% endifequal %}>A
+                                </option>
+                                <option value="B"
+                                        {% ifequal user.blood_type 'B' %}selected{% endifequal %}>B
+                                </option>
+                                <option value="AB"
+                                        {% ifequal user.blood_type 'AB' %}selected{% endifequal %}>AB
+                                </option>
+                                <option value="O"
+                                        {% ifequal user.blood_type 'O' %}selected{% endifequal %}>O
+                                </option>
+                                <option value="others"
+                                        {% ifequal user.blood_type 'other' %}selected{% endifequal %}>其它
+                                </option>
+                            {% endif %}
                         </select>
                     </td>
                 </tr>
@@ -131,10 +155,25 @@
                     <td>饮食偏好</td>
                     <td>
                         <select class="form-control" id="sel2" name="eating-prefer">
-                            <option>清淡</option>
-                            <option>辛辣</option>
-                            <option>咸</option>
-                            <option>甜</option>
+                            {% if user.eating_prefer is None %}
+                                <option>清淡</option>
+                                <option>辛辣</option>
+                                <option>咸</option>
+                                <option>甜</option>
+                            {% else %}
+                                <option
+                                        {% ifequal user.eating_prefer '清淡' %}selected{% endifequal %}>清淡
+                                </option>
+                                <option
+                                        {% ifequal user.eating_prefer '辛辣' %}selected{% endifequal %}>辛辣
+                                </option>
+                                <option
+                                        {% ifequal user.eating_prefer '咸' %}selected{% endifequal %}>咸
+                                </option>
+                                <option
+                                        {% ifequal user.eating_prefer '甜' %}selected{% endifequal %}>甜
+                                </option>
+                            {% endif %}
                         </select>
                     </td>
                 </tr>
@@ -142,10 +181,25 @@
                     <td>饮食风格</td>
                     <td>
                         <select class="form-control" id="sel3" name="eating-style">
-                            <option>长期应酬</option>
-                            <option>规律三餐</option>
-                            <option>一日两餐</option>
-                            <option>少食多餐</option>
+                            {% if user.eating_style is None %}
+                                <option>长期应酬</option>
+                                <option>规律三餐</option>
+                                <option>一日两餐</option>
+                                <option>少食多餐</option>
+                            {% else %}
+                                <option
+                                        {% ifequal user.eating_style '长期应酬' %}selected{% endifequal %}>长期应酬
+                                </option>
+                                <option
+                                        {% ifequal user.eating_style '规律三餐' %}selected{% endifequal %}>规律三餐
+                                </option>
+                                <option
+                                        {% ifequal user.eating_style '一日两餐' %}selected{% endifequal %}>一日两餐
+                                </option>
+                                <option
+                                        {% ifequal user.eating_style '少食多餐' %}selected{% endifequal %}>少食多餐
+                                </option>
+                            {% endif %}
                         </select>
                     </td>
                 </tr>
@@ -160,12 +214,29 @@
                     <td>
                         <select multiple id="sel4" onchange="changeAna();">
                             <optgroup label="既往病史">
-                                {#这个还不全面#}
-                                <option value="1">高血压</option>
-                                <option value="2">鼻炎</option>
-                                <option value="3">咽炎</option>
-                                <option value="4">关节炎</option>
-                                <option value="5">骨质疏松</option>
+                                {% if user.anamnesis is None %}
+                                    <option value="1">高血压</option>
+                                    <option value="2">鼻炎</option>
+                                    <option value="3">咽炎</option>
+                                    <option value="4">关节炎</option>
+                                    <option value="5">骨质疏松</option>
+                                {% else %}
+                                    <option value="1"
+                                            {% if user.anamnesis|has:'1' %}selected{% endif %}>高血压
+                                    </option>
+                                    <option value="2"
+                                            {% if user.anamnesis|has:'2' %}selected{% endif %}>鼻炎
+                                    </option>
+                                    <option value="3"
+                                            {% if user.anamnesis|has:'3' %}selected{% endif %}>咽炎
+                                    </option>
+                                    <option value="4"
+                                            {% if user.anamnesis|has:'4' %}selected{% endif %}>关节炎
+                                    </option>
+                                    <option value="5"
+                                            {% if user.anamnesis|has:'5' %}selected{% endif %}>骨质疏松
+                                    </option>
+                                {% endif %}
                             </optgroup>
                         </select>
                         <input type="hidden" name="anamnesis" id="hid-sel4" value="{{ user.anamnesis }}">
@@ -176,7 +247,7 @@
             <input class="btn btn-block btn-lg btn-primary" type="submit" value="保存更改">
         </form>
         <div class="cntrdiv">
-            <a href="#">DietCat将如何使用我的身体信息?</a>
+            <a href="javascript:void(0);" onclick="showHowToUse();">DietCat将如何使用我的身体信息?</a>
         </div>
     </div>
     <script>
@@ -194,6 +265,12 @@
             console.log(hid_sel4);
             //放入隐藏域中,后续由隐藏域提交
             hid_sel4.value = ana;
+        }
+
+        {# 用户点击如何使用身体信息 #}
+
+        function showHowToUse() {
+            window.alert('TODO');
         }
     </script>
 {% endblock %}

@@ -20,13 +20,13 @@
             <p>反馈您的建议、遇到的bug等将帮助改进DietCat。</p>
             <hr>
             {#取消了form的文本区域#}
-            <textarea id="prop"></textarea>
+            <textarea id="prop">{{ discussion }}</textarea>
             <button class="btn btn-block btn-lg btn-primary" onclick="subProp();">提交</button>
             <button class="btn btn-block btn-lg btn-secondary" onclick="resetProp();">重置</button>
         </div>
     </div>
     <script>
-        {#为了用户体验,这里用ajax异步传输#}
+        {#提交用户反馈#}
 
         function subProp() {
             $.ajax({
@@ -38,13 +38,20 @@
                     if ('1' === result) {
                         window.alert("提交成功!");
                     } else if ('2' === result) {
-                        window.alert("请勿频繁提交!");
-                    }
-                    else {
-                        window.alert("未知的错误!")
+                        window.alert("请先登录!");
+                    } else if ('3' == result) {
+                        window.alert("禁止的请求形式!")
+                    } else {
+                        window.alert("未知错误!")
                     }
                 }
             })
+        }
+
+        {# 重置文本区 #}
+
+        function resetProp() {
+            $('#prop').val('');
         }
     </script>
 {% endblock %}

@@ -14,21 +14,21 @@ global RMD
 RMD = mainapp_RMD.FoodRMD()
 
 
-# 提交用户反馈,这里用了ajax
-# 其实我觉得在这个页面不用ajax也没什么,毕竟这个页面也没有别的需要交互的东西
+# 提交用户反馈
 def subProp(request):
+    userId = request.session.get('_id')
+    if userId is None:
+        return HttpResponse('2')
     if request.method == 'POST':
         # 获得提交的具体内容
         msg = request.POST.get('prop')
-        username = request.session.get('username')
-        print('[ajax获取]', msg)
-        # TODO 写入DB
-        mainapp_dao.addDocInUser({'username': username, 'Discussion': msg})
+        # 写入DB
+        mainapp_dao.updateOneUser({'_id': ObjectId(userId)}, {'$set': {'discussion': msg}})
         return HttpResponse('1')
     return HttpResponse('3')
 
 
-# FIXME 提交某个用户对某个菜品的评分
+# 提交某个用户对某个菜品的评分
 def subScore(request):
     if request.method == 'POST':
         print(request.session)
@@ -44,9 +44,9 @@ def subScore(request):
         # 获取提交的评分
         score = request.POST.get('score')
         print('[ajax获取]打分值:', score)
-        # TODO 调用DAO写入数据库
+        # 调用DAO写入数据库
         RMD.AddEval(mainapp_dao.username2ID(userId), foodName, int(score))
-        # TODO 影响训练模型
+        # 影响训练模型
         RMD.AfferADD(mainapp_dao.username2ID(userId), foodName, int(score))
         return HttpResponse('1')
     return HttpResponse('2')
@@ -103,10 +103,10 @@ def uploadHead(request):
     # 获取要上传的头像
     file_obj = request.FILES.get('file')
     # 检查是否没有选择文件
-    #print("nonono")
+    # print("nonono")
     if file_obj is None:
         return HttpResponse('4')
-        #print("nonono")
+        # print("nonono")
     # 上传头像(使用userId为名的jpg文件)
     with open(os.path.join(BASE_DIR, 'static', 'userpic', userId + '.jpg'), 'wb') as f:
         print(file_obj, type(file_obj))
@@ -116,7 +116,6 @@ def uploadHead(request):
 
 
 # FIXME 删除本账户
-
 def deleteMsg(request):
     # 校验提交方式
     # print('Hello!')

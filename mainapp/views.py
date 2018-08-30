@@ -17,7 +17,6 @@ RMD = mainapp_RMD.FoodRMD()
 
 # 用户要注册
 def register(request):
-    # FIXME 完成注册功能
     if request.method == 'POST':
         # 获取用户名和密码
         username = request.POST.get('username', None)
@@ -106,11 +105,40 @@ def getBdyMsg(request):
         return render(request, r'web/login.html', {'stat': -5})
     # 获取用户(字典形式)
     user = mainapp_dao.firstDocInUser({"_id": ObjectId(userId)})
-    return render(request, r'web/bdymsg.html', {'user': user})
+    # 计算BMI指数
+    weight = None
+    height = None
+    BMI = ''
+    if user.get('weight') is None:
+        BMI += '缺少身高!'
+    else:
+        weight = float(user.get('weight'))
+    if user.get('height') is None:
+        BMI += '缺少体重!'
+    else:
+        height = float(user.get('height'))
+    if weight is not None and height is not None:
+        BMI = (weight / 2) / pow((height / 100), 2)  # 计算BMI的体重使用kg而不是斤
+        if BMI < 18.5:
+            BMI = str(BMI) + ' (体重过轻)'
+        elif BMI < 24:
+            BMI = str(BMI) + ' (正常范围)'
+        elif BMI < 27:
+            BMI = str(BMI) + ' (体重偏重)'
+        elif BMI < 30:
+            BMI = str(BMI) + ' (轻度肥胖)'
+        elif BMI < 35:
+            BMI = str(BMI) + ' (中度肥胖)'
+        else:
+            BMI = str(BMI) + ' (重度肥胖)'
+    return render(request, r'web/bdymsg.html', {'user': user, 'bmi': BMI})
 
 
-# 用户要进入昨日打卡页面
+# 用户要进入每日打卡页面
 def getPunchPage(request):
+    userId = request.session.get('_id')
+    if userId is None:
+        return render(request, r'web/login.html', {'stat': -5})
     # 获取服务器时间
     serverDate = datetime.datetime.now().strftime('%Y-%m-%d')
     return render(request, r'web/punch.html', {'serverDate': serverDate})
@@ -119,6 +147,8 @@ def getPunchPage(request):
 # 用户要进入一日三餐建议页面
 def getMealsPage(request):
     userId = request.session.get('_id')
+    if userId is None:
+        return render(request, r'web/login.html', {'stat': -5})
     recommend = RMD.Single_Recommand(userId, 30)
     breakfast, RecommendList, sneak = mainapp_dao.OneDayRecommend(recommend)
     lunch = RecommendList[0]
@@ -132,17 +162,27 @@ def getMealsPage(request):
 
 # 用户要进入设置页面
 def getSettingPage(request):
+    userId = request.session.get('_id')
+    if userId is None:
+        return render(request, r'web/login.html', {'stat': -5})
     return render(request, r'web/setting.html')
 
 
 # 用户要进入反馈页面
 def getPropPage(request):
-    return render(request, r'web/prop.html')
+    userId = request.session.get('_id')
+    if userId is None:
+        return render(request, r'web/login.html', {'stat': -5})
+    # 从DB中查询
+    user = mainapp_dao.firstDocInUser({'_id': ObjectId(userId)})
+    return render(request, r'web/prop.html', {'discussion': user.get('discussion', '')})
 
 
 # 用户要进入食物推荐页面
 def getRecommendPage(request, page='1'):
     userId = request.session.get('_id')
+    if userId is None:
+        return render(request, r'web/login.html', {'stat': -5})
     recommend = RMD.Single_Recommand(userId, 70)
     if len(set(recommend)) < 70:
         recommend = recommend[0:len(set(recommend))]
@@ -168,6 +208,9 @@ def getPlanPage(request):
 
 # 测试下载报表文件
 def testDown(request):
+    userId = request.session.get('_id')
+    if userId is None:
+        return render(request, r'web/login.html', {'stat': -5})
     file = open(r'test/测试报表文件.txt', 'rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
