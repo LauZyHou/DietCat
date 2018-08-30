@@ -62,13 +62,14 @@ def getIndexPage(request):
             return render(request, r'web/login.html', {'stat': -1})
         # FIXME 使用用户名和密码校验身份,并从DB中获取该用户id
         user = mainapp_dao.firstDocInUser({"username": username, "password": password})
-        favourFood = mainapp_dao.favouriateFood(username)  # 根据用户名查询最喜爱的食物
         if user is None:
             # 登录失败
             return render(request, r'web/login.html', {'stat': -4})
         # 登录成功,将登录身份存进session里
-        request.session['_id'] = user.get('_id').__str__()  # 转成str
+        userid = user.get('_id').__str__()
+        request.session['_id'] = userid  # 转成str
         request.session['username'] = user.get('username')
+        favourFood = mainapp_dao.favouriateFood(userid)  # 根据用户名查询最喜爱的食物
         print("存进了Session里")
         return render(request, r'web/index.html', {'favourlist': favourFood,
                                                    'hotlist': hotFood})
@@ -111,8 +112,13 @@ def getBdyMsg(request):
 # 用户要进入昨日打卡页面
 def getPunchPage(request):
     # 获取服务器时间
+    userId = request.session.get('_id')
     serverDate = datetime.datetime.now().strftime('%Y-%m-%d')
-    return render(request, r'web/punch.html', {'serverDate': serverDate})
+    return render(request, r'web/punch.html',
+                  {'serverDate': serverDate,
+                   'month': serverDate[0:7],
+                   'spoleep': mainapp_dao.spoleep(userId, serverDate[0:8]),
+                   'walkdata': mainapp_dao.walkreport(userId, serverDate[0:4])})
 
 
 # 用户要进入一日三餐建议页面
@@ -156,7 +162,10 @@ def getRecommendPage(request, page='1'):
 
 # 用户要进入饮食计划页面
 def getPlanPage(request):
-    return render(request, r'web/plan.html')
+    userId = request.session.get('_id')
+    serverDate = datetime.datetime.now().strftime('%Y-%m-%d')
+    return render(request, r'web/plan.html',
+                  {'sporttime': mainapp_dao.weekspoleep(userId, serverDate), 'weekday': mainapp_dao.Week(serverDate)})
 
 
 # 测试下载报表文件
@@ -242,7 +251,6 @@ def subData(request, way):
             else:
                 mainapp_dao.updateuserdata({'用户': userId, '时间': date},
                                            {'$set': {'睡眠时长': sleep, '运动时长': sport}})
-            return render(request, r'web/punch.html', {'serverDate': serverDate,'spoleep':mainapp_dao.sh})
         elif way == 'walk':
             walkstep = request.POST.get('todaystep')
             if mainapp_dao.IFdateinData({'用户': userId, '时间': date}) is None:
@@ -252,8 +260,8 @@ def subData(request, way):
                                            {'$set': {'步行距离': walkstep}})
         elif way == 'job':
             num2job = {'1': '有氧运动', '2': '无氧运动', '3': '应酬', '4': '暴饮暴食', '5': '吸烟', }
-            num = request.POST.getlist('job')
             job = []
+            num = request.POST.getlist('job')
             for item in num:
                 job.append(num2job[item])
             print(job)
@@ -269,4 +277,8 @@ def subData(request, way):
             else:
                 mainapp_dao.updateuserdata({'用户': userId, '时间': serverDate},
                                            {'$set': {'食物': food}})
-    return render(request, r'web/punch.html', {'serverDate': serverDate})
+    return render(request, r'web/punch.html',
+                  {'serverDate': serverDate,
+                   'month': serverDate[0:7],
+                   'spoleep': mainapp_dao.spoleep(userId, serverDate[0:8]),
+                   'walkdata': mainapp_dao.walkreport(userId, serverDate[0:4])})
