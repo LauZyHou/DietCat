@@ -87,6 +87,7 @@
                     } else if ('2' === result) {
                         window.alert("无效的提交方式!");
                     } else if ('4' === result) {
+                        {# print("youyou"); #}
                         window.alert("请选择要上传的图片!");
                     } else {
                         window.alert("[debug]未知的错误!");
@@ -97,8 +98,23 @@
 
         {# 删除本账户 #}
 
-        function deleteThisUser() {
-            window.alert("删个屁");
+        function deleteThisUser(){
+            $.ajax({
+                type: 'POST',
+                url: '/deletemsg/',
+                data: {'username': $('#username').val(), 'password': $('#password').val()},
+                success: function (result) {
+                    {# window.alert("删除成功，你走好嘞!"); #}
+                    if ('1' === result) {
+                        window.alert("删除成功，您走好嘞!");
+                        window.location.href="http://127.0.0.1:8000/firstuse/";
+                    } else if ('3' === result) {
+                        window.alert("Session中没有该用户!请先登录!");
+                    } else {
+                        window.alert("[debug]未知的错误!");
+                    }
+                }
+            })
         }
     </script>
 {% endblock %}

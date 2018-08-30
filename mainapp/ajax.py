@@ -114,14 +114,21 @@ def uploadHead(request):
 
 
 # FIXME 删除本账户
-def deleteThisUser(request):
+def deleteMsg(request):
     # 校验提交方式
+    #print('Hello!')
     if request.method != 'POST':
         return HttpResponse('2')
     # 检查用户id
     userId = request.session.get('_id')
     if userId is None:
         return HttpResponse('3')
+    #print('wecan!')
+    if os.path.isfile(BASE_DIR + '/static/userpic/' + userId +'.jpg'):
+        os.remove(BASE_DIR + '/static/userpic/' + userId + '.jpg')
+    mainapp_dao.deleteTheUser({'_id': ObjectId(userId)})
+    request.session.flush()    #删除session
+    # print("HelloWorld!")
     # TODO 根据id删除user表
     # TODO 删除头像
     # TODO 删除其它相关信息

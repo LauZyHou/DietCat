@@ -37,6 +37,7 @@ urlpatterns = [
     path('register/', mainapp_views.register),
     path('subscore/', mainapp_ajax.subScore),
     path('updatemsg/', mainapp_ajax.updateMsg),
+    path('deletemsg/', mainapp_ajax.deleteMsg),
     path('uploadhead/', mainapp_ajax.uploadHead),
     path('gotomeal/<str:id>', mainapp_views.addEval),
 ]

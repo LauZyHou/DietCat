@@ -30,7 +30,10 @@ def firstDocInUser(dict):
 def updateOneUser(dict_where, dict_set):
     db_dietcat.user.update(dict_where, dict_set)  # update方法只更新一个
 
-
+# 删除满足条件的用户
+def deleteTheUser(dic):
+   # print(dic)
+    db_dietcat.user.remove(dic)     #只删除第一个用户；
 def RecommendList(list):
     RMDLIST = []
     for i in list:
