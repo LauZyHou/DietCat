@@ -103,8 +103,10 @@ def uploadHead(request):
     # 获取要上传的头像
     file_obj = request.FILES.get('file')
     # 检查是否没有选择文件
+    #print("nonono")
     if file_obj is None:
         return HttpResponse('4')
+        #print("nonono")
     # 上传头像(使用userId为名的jpg文件)
     with open(os.path.join(BASE_DIR, 'static', 'userpic', userId + '.jpg'), 'wb') as f:
         print(file_obj, type(file_obj))
@@ -114,17 +116,18 @@ def uploadHead(request):
 
 
 # FIXME 删除本账户
-def deleteThisUser(request):
+
+def deleteMsg(request):
     # 校验提交方式
+    # print('Hello!')
     if request.method != 'POST':
         return HttpResponse('2')
-    # 检查用户id
+        # 检查用户id
     userId = request.session.get('_id')
     if userId is None:
         return HttpResponse('3')
-    # TODO 根据id删除user表
-    # TODO 删除头像
-    # TODO 删除其它相关信息
+    if os.path.isfile(BASE_DIR + '/static/userpic/' + userId + '.jpg'):
+        os.remove(BASE_DIR + '/static/userpic/' + userId + '.jpg')
+    mainapp_dao.deleteTheUser({'_id': ObjectId(userId)})
+    request.session.flush()  # 删除session
     return HttpResponse('1')
-
-
