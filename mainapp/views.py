@@ -5,7 +5,9 @@ from bson.objectid import ObjectId
 from django.http import FileResponse, HttpResponseRedirect
 from mainapp import dao as mainapp_dao
 from mainapp import recommend as mainapp_RMD
+from mainapp import healthdata as mainapp_health
 import datetime
+import numpy as np
 import random
 
 print('===view===')
@@ -49,6 +51,7 @@ def getLoginPage(request):
 def getIndexPage(request):
     mylst = [1 for i in range(12)]  # 方便开发用
     hotFood = mainapp_dao.hotFood()  # 无论如何都要有热门食物
+    print(hotFood)
     # 看看Session里有没有,有就直接进不做校验
     if request.session.get('_id') is not None and request.session.get('username') is not None:
         favourFood = mainapp_dao.favouriateFood(request.session.get('_id'))
@@ -158,7 +161,10 @@ def getMealsPage(request):
     userId = request.session.get('_id')
     if userId is None:
         return render(request, r'web/login.html', {'stat': -5})
-    recommend = RMD.Single_Recommand(userId, 30)
+    try:
+        recommend = RMD.Single_Recommand(userId, 70)
+    except:
+        recommend = mainapp_dao.HotFood()
     breakfast, RecommendList, sneak = mainapp_dao.OneDayRecommend(recommend)
     lunch = RecommendList[0]
     dinner = RecommendList[1]
@@ -192,12 +198,17 @@ def getRecommendPage(request, page='1'):
     userId = request.session.get('_id')
     if userId is None:
         return render(request, r'web/login.html', {'stat': -5})
-    recommend = RMD.Single_Recommand(userId, 70)
+    try:
+        recommend = RMD.Single_Recommand(userId, 70)
+    except:
+        recommend = mainapp_dao.HotFood()
+    print(recommend)
     if len(set(recommend)) < 70:
         recommend = recommend[0:len(set(recommend))]
         recommend.extend(mainapp_dao.FoodNotEnough(70 - len(set(recommend))))
     #    print(recommend)
-    RecommendList = random.sample(mainapp_dao.RecommendList(recommend)[12 * (int(page) - 1):12 * (int(page))], 12)
+    # RecommendList = random.sample(mainapp_dao.RecommendList(recommend)[12 * (int(page) - 1):12 * (int(page))], 12)
+    RecommendList = (mainapp_dao.RecommendList(recommend)[12 * (int(page) - 1):12 * (int(page))])
     return render(request, r'web/recommend.html',
                   {'mylst': RecommendList,
                    'pglst': [i + 1 for i in range(5)],
@@ -210,11 +221,17 @@ def getPlanPage(request):
     if userId is None:
         return render(request, r'web/login.html', {'stat': -5})
     # 获取用户
-    user = mainapp_dao.firstDocInUser({'_id': ObjectId(userId)})
-    serverDate = datetime.datetime.now().strftime('%Y-%m-%d')
-    return render(request, r'web/plan.html',
-                  {'user': user, 'sporttime': mainapp_dao.weekspoleep(userId, serverDate),
-                   'weekday': mainapp_dao.Week(serverDate)})
+    try:
+        user = mainapp_dao.firstDocInUser({'_id': ObjectId(userId)})
+        user['BMI'] = (int(user['weight']) / 2 / np.square(int(user['height']) / 100))
+        serverDate = datetime.datetime.now().strftime('%Y-%m-%d')
+        return render(request, r'web/plan.html',
+                      {'user': user, 'sporttime': mainapp_dao.weekspoleep(userId, serverDate),
+                       'weekday': mainapp_dao.Week(serverDate),
+                       'standard': [mainapp_health.avgstandard(), mainapp_health.avgstandard('优秀', user['sex'])]
+                          , 'status': mainapp_dao.bodystatus(userId)})
+    except:
+        return render(request, r'web/bdymsg.html', {'user': user, 'bmi': ''})
 
 
 # 测试下载报表文件

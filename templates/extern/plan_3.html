@@ -10,7 +10,7 @@
     option = {
         tooltip: {},
         legend: {
-            data: ['您的情况', '标准情况']
+            data: ['您的情况', '标准情况','优秀情况']
         },
         radar: {
             // shape: 'circle',
@@ -26,9 +26,9 @@
                 {name: '仰卧起坐', max: 60},
                 {name: '视力(左)', max: 6.0},
                 {name: '肺活量', max: 7000},
-                {name: '俯卧撑', max: 60},
+                {name: 'BMI', max: 40},
                 {name: '视力(右)', max: 6.0},
-                {name: '统计均日睡眠时间', max: 10}
+                {name: '立定跳远', max: 300}
             ]
         },
         series: [{
@@ -37,12 +37,16 @@
             // areaStyle: {normal: {}},
             data: [
                 {
-                    value: [{{ user.sit_ups_1 }}, {{ user.vision_left }}, {{ user.lung_capacity }}, {{ user.push_ups_1 }}, {{ user.vision_right }}, {{ user.sleep_time_avg }}],
+                    value: [{{ user.sit_ups_1 }}, {{ user.vision_left }}, {{ user.lung_capacity }}, {{ user.BMI }}, {{ user.vision_right }}, {{ user.standing_long_jump }}],
                     name: '您的情况'
                 },
                 {
-                    value: [35, 4.1, 3500, 25, 5.1, 7],
+                    value: {{ standard.0 }},
                     name: '标准情况'
+                },
+                {
+                    value: {{ standard.1 }},
+                    name: '优秀情况'
                 }
             ]
         }]

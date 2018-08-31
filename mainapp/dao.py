@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import pymongo
 from bson.objectid import ObjectId
 import random
-import re
+import pandas as pd
 import datetime
 
 start = '2017-12-31'
@@ -52,6 +52,8 @@ def updateOneUser(dict_where, dict_set):
 # 删除满足条件的用户
 def deleteTheUser(dic):
     db_dietcat.user.remove(dic)  # 只删除第一个用户；
+
+
 def username2ID(name):
     return db_dietcat.user.find_one({'username': name}).get('_id').__str__()  # 可能是None
 
@@ -122,11 +124,21 @@ def favouriateFood(username):
 
 def hotFood():
     hotfood = []
-    scotts_posts = db_dietcat.ShopFood.find({}, {"_id": 0})
+    scotts_posts = db_dietcat.ShopFood.find({})
     for i in scotts_posts:
         if i['推荐人数'] > 50:
             i['id'] = i.get('_id').__str__()
             hotfood.append(i)
+    return random.sample(hotfood, 12)
+
+
+def HotFood():
+    hotfood = []
+    scotts_posts = db_dietcat.ShopFood.find({})
+    for i in scotts_posts:
+        if i['推荐人数'] > 50:
+            i['id'] = i.get('_id').__str__()
+            hotfood.append(i['商铺名称'] + '-' + i['菜品'])
     return random.sample(hotfood, 12)
 
 
@@ -210,11 +222,61 @@ def weekspoleep(userid, now):
     return [STime['sport'], STime['sleep'], STime['other']]
 
 
-def Week(now):
+def Week(now=datetime.datetime.now().strftime('%Y-%m-%d')):
     weekday = []
     datestart = datetime.datetime.strptime(now, '%Y-%m-%d')
     while len(weekday) < 7:
-        weekday.append(datestart.strftime('%m')+'月'+datestart.strftime('%d')+'日')
+        weekday.append(datestart.strftime('%m') + '-' + datestart.strftime('%d'))
         datestart -= datetime.timedelta(days=1)
     weekday.reverse()
     return weekday
+
+
+def OneWeek(now=datetime.datetime.now().strftime('%Y-%m-%d')):
+    weekday = []
+    datestart = datetime.datetime.strptime(now, '%Y-%m-%d')
+    while len(weekday) < 7:
+        weekday.append(datestart.strftime('%Y-%m-%d'))
+        datestart -= datetime.timedelta(days=1)
+    weekday.reverse()
+    return weekday
+
+
+def bodystatus(UserId):
+    Stime = []
+    badjobnum = 0
+    for T in OneWeek():
+        time = db_dietcat.UserData.find_one({'用户': UserId, '时间': T})
+        if time is None or time['睡眠时长'] is None:
+            Stime.append([0, 0])
+        elif (24 - int(time['睡眠时长']) - int(time['运动时长'])) > 0:
+            Stime.append([int(time['睡眠时长']), (24 - int(time['睡眠时长']) - int(time['运动时长']))])
+        else:
+            Stime.append([0, 0])
+        try:
+            if '暴饮暴食' in time['工作']:
+                badjobnum += 1
+            if '应酬' in time['工作']:
+                badjobnum += 1
+        except:
+            continue
+    data = pd.DataFrame(Stime, columns=['睡眠时长', '其他'])
+    sleep = data.std()[0]
+    other = data.mean()[1]
+    State = []
+    if sleep < 2:
+        State.append('规律')
+    else:
+        State.append('不规律')
+    if other > 14:
+        State.append('较少')
+    else:
+        State.append('正常')
+    if badjobnum > 7:
+        State.append('太多')
+    elif badjobnum > 4:
+        State.append('较多')
+    else:
+        State.append('正常')
+    print(State)
+    return State
