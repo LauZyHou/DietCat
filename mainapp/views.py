@@ -38,6 +38,10 @@ def register(request):
 
 # 去登录界面
 def getLoginPage(request):
+    # 通过检查Session检验是否登录了
+    userId = request.session.get('_id')
+    if userId is not None:
+        return getIndexPage(request)
     return render(request, r'web/login.html')
 
 
