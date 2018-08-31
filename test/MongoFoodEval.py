@@ -6,7 +6,15 @@ client = MongoClient('localhost', 27017)
 db = client['dietcat']
 posts = db.FoodEval
 UserData = db.UserData
-name = []
+name=[]
+Name = ['lzh','dzr','ghj','zhy','dll']
+for i in Name:
+    print(i)
+    post_data = {
+        'username': i,
+        'password': '123',
+    }
+    result = db.user.insert_one(post_data)
 e = db.user.find({}, {'password': 1, 'username': 1})
 for i in e:
     print(i.get('_id').__str__())
