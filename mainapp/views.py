@@ -146,8 +146,8 @@ def getPunchPage(request):
     userId = request.session.get('_id')
     serverDate = datetime.datetime.now().strftime('%Y-%m-%d')
     return render(request, r'web/punch.html',
-                  {'serverDate': serverDate,
-                   'month': serverDate[0:7],
+                  {'serverDate': serverDate,'year':[datetime.datetime.now().strftime('%Y')],
+                   'month': [datetime.datetime.now().strftime('%Y-%m')],
                    'spoleep': mainapp_dao.spoleep(userId, serverDate[0:8]),
                    'walkdata': mainapp_dao.walkreport(userId, serverDate[0:4])})
 
@@ -344,7 +344,7 @@ def subData(request, way):
                 mainapp_dao.updateuserdata({'用户': userId, '时间': serverDate},
                                            {'$set': {'食物': food}})
     return render(request, r'web/punch.html',
-                  {'serverDate': serverDate,
-                   'month': serverDate[0:7],
+                  {'serverDate': serverDate,'year':[datetime.datetime.now().strftime('%Y')],
+                   'month': [datetime.datetime.now().strftime('%Y-%m')],
                    'spoleep': mainapp_dao.spoleep(userId, serverDate[0:8]),
                    'walkdata': mainapp_dao.walkreport(userId, serverDate[0:4])})

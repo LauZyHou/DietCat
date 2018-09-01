@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     {% load static %}
     <meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
-    {#Bootstrap需要jQuery#}
-    <script src="{% static "/flatui/other_rely/jquery-3.3.1.min.js" %}"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
     {#Bootstrap4需要Popper.js#}
     <script src="{% static "/flatui/other_rely/popper.min.js" %}" crossorigin="anonymous"></script>
@@ -15,6 +12,8 @@
     {#Bootstrap4(适合Flat UI)#}
     <link href="{% static "/flatui/dist/css/vendor/bootstrap.min.css" %}" rel="stylesheet">
     {#<script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>#}
+    {#Bootstrap需要jQuery#}
+    <script src="{% static "/flatui/other_rely/jquery-3.3.1.min.js" %}"></script>
 
     {#Flat UI#}
     <link href="{% static "/flatui/dist/css/flat-ui.css" %}" rel="stylesheet">

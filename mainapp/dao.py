@@ -155,7 +155,7 @@ def IFdateinData(dict):
     return db_dietcat.UserData.find_one(dict)
 
 
-def inputuserdata(useid, date, sleeptime=None, sporttime=None, walk=None, joblist=None, foodlist=None):
+def inputuserdata(useid, date=datetime.datetime.now().strftime('%Y-%m-%d'), sleeptime=None, sporttime=None, walk=None, joblist=None, foodlist=None):
     result = db_dietcat.UserData.insert_one({
         '用户': useid,
         '时间': date,
