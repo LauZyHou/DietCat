@@ -1,5 +1,5 @@
 # DietCat饮食专家
-DietCat饮食推荐网站，Django工程，2018夏季课程项目。
+DietCat饮食推荐网站，Django2+FlatUI+MongoDB，2018夏季课程项目。
 ## 小组成员
 刘知昊，杜泽仁，郑海燕，段丽丽，顾河建。
 ## 主要界面展示
