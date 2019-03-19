@@ -3,29 +3,35 @@ DietCat饮食推荐网站，Django工程，2018夏季课程项目。
 ## 小组成员
 刘知昊，杜泽仁，郑海燕，段丽丽，顾河建。
 ## 主要界面展示
-![](https://i.imgur.com/l9Hb1k5.jpg)
+![](./README_PIC/1.png)
 
-![](https://i.imgur.com/UP6Invh.jpg)
+![](./README_PIC/2.png)
 
-![](https://i.imgur.com/sRmOaFz.jpg)
+![](./README_PIC/3.png)
 
-![](https://i.imgur.com/QgHLlkT.jpg)
+![](./README_PIC/4.png)
 
-![](https://i.imgur.com/5Hcpflf.jpg)
+![](./README_PIC/5.png)
 
-![](http://i1.bvimg.com/660180/36adc045170d777f.jpg)
+![](./README_PIC/6.png)
 
-![](http://i1.bvimg.com/660180/c5412610130c2a72.jpg)
+![](./README_PIC/7.png)
 
-![](http://i1.bvimg.com/660180/ed71192b0aba6926.jpg)
+![](./README_PIC/8.png)
 
-![](https://i.imgur.com/nLwWrDq.jpg)
+![](./README_PIC/9.png)
 
-![](https://i.imgur.com/RIjt30f.jpg)
+![](./README_PIC/10.png)
 
-![](https://i.imgur.com/AzuWHxQ.jpg)
+![](./README_PIC/11.png)
 
-![](https://i.imgur.com/0YZb4Gh.jpg)
+![](./README_PIC/12.png)
+
+![](./README_PIC/13.png)
+
+![](./README_PIC/14.png)
+
+![](./README_PIC/15.png)
 ## 开发与合作日志
 ### 项目概况
 为了大家快速上手开发本项目，这里我对整个工程做一个简要的概况描述。
@@ -56,11 +62,11 @@ mongorestore.exe -h 127.0.0.1:27017 -d dietcat E:\WorkSpace\PyCharm\DietCat\test
 <br>
 【6】ML部分需要添加依赖:pandas,numpy,sklearn
 <br>
-【7】Django版本需要2.1,可使用cogitnda更新:
+【7】Django版本需要2.1,可使用conda更新:
 <br>
 conda update -n 环境名(默认base) django
 <br>
-【8】为生成到本地数据库,单独运行test目录下形如Mongo*.py的文件。
+【8】为生成到本地数据库,单独运行test目录下形如Mongo*.py的文件。（最新更新：已经dump到数据库，不需要单独运行这些脚本）
 #### 特别注意
 在mainapp下的views.py中可以看到用户的各种操作，为了该文件的简洁，请在外面写后端操作的模块，封装成函数并在这里调用。
 ### 2018年7月2日

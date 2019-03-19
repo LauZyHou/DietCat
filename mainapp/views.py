@@ -116,11 +116,11 @@ def getBdyMsg(request):
     weight = None
     height = None
     BMI = ''
-    if user.get('weight') is None:
+    if user.get('weight') is None or user.get('weight') == '':
         BMI += '缺少身高!'
     else:
         weight = float(user.get('weight'))
-    if user.get('height') is None:
+    if user.get('height') is None or user.get('height') == '':
         BMI += '缺少体重!'
     else:
         height = float(user.get('height'))
@@ -231,7 +231,7 @@ def getPlanPage(request):
                        'standard': [mainapp_health.avgstandard(), mainapp_health.avgstandard('优秀', user['sex'])]
                           , 'status': mainapp_dao.bodystatus(userId)})
     except:
-        return render(request, r'web/bdymsg.html', {'user': user, 'bmi': ''})
+        return render(request, r'web/bdymsg.html', {'user': user, 'bmi': '', 'please': 1})
 
 
 # 测试下载报表文件

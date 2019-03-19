@@ -18,7 +18,11 @@
 {% block content %}
     <div class="container">
         <div class="cntrdiv">
-            <h2>DietCat用户身体信息表</h2>
+            {% if please is None %}
+                <h2>DietCat用户身体信息表</h2>
+            {% else %}
+                <h2>请先添写个人信息!并至少打卡一天!</h2>
+            {% endif %}
             <p>欢迎，填写必要的身体信息能让我们更好地为您提供科学的饮食服务。</p>
         </div>
         <form action="/updatebdymsg/" method="post">

@@ -5,7 +5,8 @@ Created on Mon Aug 27 13:35:00 2018
 @author: 45431
 """
 import numpy as np
-from sklearn.cross_validation import cross_val_score, ShuffleSplit
+# from sklearn.cross_validation import cross_val_score, ShuffleSplit
+from sklearn.model_selection import cross_val_score, ShuffleSplit
 from sklearn.ensemble import RandomForestRegressor
 import pymongo
 from pymongo import MongoClient
