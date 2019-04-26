@@ -1,5 +1,10 @@
 # DietCat饮食专家
 DietCat饮食推荐网站，Django2+FlatUI+MongoDB，2018夏季课程项目。
+
+![Python](https://img.shields.io/badge/Python-3.6.6-blue.svg)
+![Django](https://img.shields.io/badge/Django-2.0.2-ff69b4.svg)
+![MongoDB](https://img.shields.io/badge/MongoDB-4.0.0-green.svg)
+
 ## 小组成员
 刘知昊，杜泽仁，郑海燕，段丽丽，顾河建。
 ## 主要界面展示
